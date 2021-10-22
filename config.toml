@@ -182,7 +182,7 @@ enable = true
 	desc = "Discussion and help from your fellow users"
 [[params.links.user]]
 	name ="Twitter"
-	url = "https://example.org/twitter"
+	url = "https://twitter.com/ApacheAvro"
 	icon = "fab fa-twitter"
 	desc = "Follow us on Twitter to get the latest news!"
 [[params.links.user]]
