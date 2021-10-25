@@ -197,10 +197,10 @@ enable = true
 	icon = "fab fa-github"
 	desc = "Development takes place here!"
 [[params.links.developer]]
-	name = "Chat with other project developers at Slack #avro"
+	name = "Chat with other project developers at Slack"
 	url = "https://the-asf.slack.com/"
 	icon = "fab fa-slack"
-	desc = "Chat with other project developers at #avro"
+	desc = "Chat with other project developers at #avro channel"
 [[params.links.developer]]
 	name = "Developer mailing list"
 	url = "mailto:dev@avro.apache.org"

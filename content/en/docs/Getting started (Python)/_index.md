@@ -4,8 +4,6 @@ tags: ["python"]
 title: "Getting Started (Python)"
 linkTitle: "Getting Started (Python)"
 weight: 3
-description: >
-  What does your user need to know to try your project?
 ---
 
 This is a short guide for getting started with Apache Avro™ using Python. This guide only covers using Avro for data serialization; see Patrick Hunt's Avro RPC Quick Start for a good introduction to using Avro for RPC.
