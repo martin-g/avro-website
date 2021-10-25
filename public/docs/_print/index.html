@@ -313,7 +313,26 @@ This the multi-page printable view of this section.
     
     
 	
-<li>8: <a href="#pg-8efbf7499fe9c7bde8d2c1bb7ff6ee3c">Contribution Guidelines</a></li>
+<li>8: <a href="#pg-f5fb9c1b2a0a68a6ec07d2037f46224e">SASL profile</a></li>
+
+
+    
+    <ul>
+        
+  
+  
+  
+  
+
+  
+
+    </ul>
+    
+  
+    
+    
+	
+<li>9: <a href="#pg-8efbf7499fe9c7bde8d2c1bb7ff6ee3c">Contribution Guidelines</a></li>
 
 
     
@@ -3401,7 +3420,76 @@ $ head /tmp/namespaces.avpr
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-8efbf7499fe9c7bde8d2c1bb7ff6ee3c">8 - Contribution Guidelines</h1>
+	<h1 id="pg-f5fb9c1b2a0a68a6ec07d2037f46224e">8 - SASL profile</h1>
+    
+	<h2 id="introduction">Introduction</h2>
+<p>SASL (<a href="https://www.ietf.org/rfc/rfc2222.txt">RFC 2222</a>) provides a framework for authentication and security of network protocols. Each protocol that uses SASL is meant to define a SASL profile. This document provides a SASL profile for connection-based Avro RPC.</p>
+<h2 id="overview">Overview</h2>
+<p>SASL negotiation proceeds as a series of message interactions over a connection between a client and server using a selected SASL mechanism. The client starts this negotiation by sending its chosen mechanism name with an initial (possibly empty) message. Negotiation proceeds with the exchange of messages until either side indicates success or failure. The content of the messages is mechanism-specific. If the negotiation succeeds, then the session can proceed over the connection, otherwise it must be abandoned.</p>
+<p>Some mechanisms continue to process session data after negotiation (e.g., encrypting it), while some specify that further session data is transmitted unmodifed.</p>
+<h2 id="negotiation">Negotiation</h2>
+<h3 id="commands">Commands</h3>
+<p>Avro SASL negotiation uses four one-byte commands.</p>
+<ul>
+<li>0: START Used in a client&rsquo;s initial message.</li>
+<li>1: CONTINUE Used while negotiation is ongoing.</li>
+<li>2: FAIL Terminates negotiation unsuccessfully.</li>
+<li>3: COMPLETE Terminates negotiation sucessfully.</li>
+</ul>
+<p>The format of a START message is:</p>
+<p><code>| 0 | 4-byte mechanism name length | mechanism name | 4-byte payload length | payload data |</code></p>
+<p>The format of a CONTINUE message is:</p>
+<p><code>| 1 | 4-byte payload length | payload data |</code></p>
+<p>The format of a FAIL message is:</p>
+<p><code>| 2 | 4-byte message length | UTF-8 message |</code></p>
+<p>The format of a COMPLETE message is:</p>
+<p><code>| 3 | 4-byte payload length | payload data |</code></p>
+<h3 id="process">Process</h3>
+<p>Negotiation is initiated by a client sending a START command containing the client&rsquo;s chosen mechanism name and any mechanism-specific payload data.</p>
+<p>The server and client then interchange some number (possibly zero) of CONTINUE messages. Each message contains payload data that is processed by the security mechanism to generate the next message.</p>
+<p>Once either the client or server send a FAIL message then negotiation has failed. UTF-8-encoded text is included in the failure message. Once either a FAIL message has been sent or received, or any other error occurs in the negotiation, further communication on this connection must cease.</p>
+<p>Once either the client or server send a COMPLETE message then negotiation has completed successfully. Session data may now be transmitted over the connection until it is closed by either side.</p>
+<h2 id="session-data">Session Data</h2>
+<p>If no SASL QOP (quality of protection) is negotiated, then all subsequent writes to/reads over this connection are written/read unmodified. In particular, messages use Avro <a href="#Message+Framing">framing</a>, and are of the form:</p>
+<p><code>| 4-byte frame length | frame data | ... | 4 zero bytes |</code></p>
+<p>If a SASL QOP is negotiated, then it must be used by the connection for all subsequent messages. This is done by wrapping each non-empty frame written using the security mechanism and unwrapping each non-empty frame read. The length written in each non-empty frame is the length of the wrapped data. Complete frames must be passed to the security mechanism for unwrapping. Unwrapped data is then passed to the application as the content of the frame.</p>
+<p>If at any point processing fails due to wrapping, unwrapping or framing errors, then all further communication on this connection must cease.</p>
+<h2 id="anonymous-mechanism">Anonymous Mechanism</h2>
+<p>The SASL anonymous mechanism (<a href="https://www.ietf.org/rfc/rfc2222.txt">RFC 2245</a>) is quite simple to implement. In particular, an initial anonymous request may be prefixed by the following static sequence:</p>
+<p><code>| 0 | 0009 | ANONYMOUS | 0000 |</code></p>
+<p>If a server uses the anonymous mechanism, it should check that the mechanism name in the start message prefixing the first request received is &lsquo;ANONYMOUS&rsquo;, then simply prefix its initial response with a COMPLETE message of:</p>
+<p><code>| 3 | 0000 |</code></p>
+<p>If an anonymous server recieves some other mechanism name, then it may respond with a FAIL message as simple as:</p>
+<p><code>| 2 | 0000 |</code></p>
+<p>Note that the anonymous mechanism need add no additional round-trip messages between client and server. The START message can be piggybacked on the initial request and the COMPLETE or FAIL message can be piggybacked on the initial response.</p>
+
+</div>
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-8efbf7499fe9c7bde8d2c1bb7ff6ee3c">9 - Contribution Guidelines</h1>
     <div class="lead">How to contribute to the docs</div>
 	
 
