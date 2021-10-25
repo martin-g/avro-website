@@ -1,6 +1,6 @@
 ---
-categories: ["Examples", "Placeholders"]
-tags: ["test","docs"] 
+categories: []
+tags: ["java"] 
 title: "Getting Started (Java)"
 linkTitle: "Getting Started (Java)"
 weight: 2
