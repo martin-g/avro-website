@@ -1,4 +1,4 @@
-baseURL = "/"
+baseURL = "https://martin-g.github.io/avro-website/"
 title = "Apache Avro"
 
 enableRobotsTXT = true
