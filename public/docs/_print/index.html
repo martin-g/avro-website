@@ -294,7 +294,7 @@ This the multi-page printable view of this section.
     
     
 	
-<li>7: <a href="#pg-8dbd4e302cd86a4d0f71f71ce3b300de">Tutorials</a></li>
+<li>7: <a href="#pg-246de25ea82ce9056b034adac8c28665">IDL Language</a></li>
 
 
     
@@ -306,22 +306,6 @@ This the multi-page printable view of this section.
   
 
   
-    
-    
-	
-<li>7.1: <a href="#pg-06285b237e6e217b13f8d9c941a9de18">Multi-Bear Domicile Setup</a></li>
-
-
-    
-  
-    
-    
-	
-<li>7.2: <a href="#pg-c86b0cbc9ee1f95a6facb6bff0282978">Another Tutorial</a></li>
-
-
-    
-  
 
     </ul>
     
@@ -329,34 +313,7 @@ This the multi-page printable view of this section.
     
     
 	
-<li>8: <a href="#pg-8df6ea6904416b571ff9bc73afb50933">Reference</a></li>
-
-
-    
-    <ul>
-        
-  
-  
-  
-  
-
-  
-    
-    
-	
-<li>8.1: <a href="#pg-fae1ff8e3c30cfdbe85045f64e0a7b36">Parameter Reference</a></li>
-
-
-    
-  
-
-    </ul>
-    
-  
-    
-    
-	
-<li>9: <a href="#pg-8efbf7499fe9c7bde8d2c1bb7ff6ee3c">Contribution Guidelines</a></li>
+<li>8: <a href="#pg-8efbf7499fe9c7bde8d2c1bb7ff6ee3c">Contribution Guidelines</a></li>
 
 
     
@@ -3177,16 +3134,246 @@ part-00000.avro  _SUCCESS
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-8dbd4e302cd86a4d0f71f71ce3b300de">7 - Tutorials</h1>
-    <div class="lead">Show your user how to work through some end to end examples.</div>
-	
+	<h1 id="pg-246de25ea82ce9056b034adac8c28665">7 - IDL Language</h1>
+    
+	<h2 id="introduction">Introduction</h2>
+<p>This document defines Avro IDL, a higher-level language for authoring Avro schemata. Before reading this document, you should have familiarity with the concepts of schemata and protocols, as well as the various primitive and complex types available in Avro.</p>
+<h2 id="overview">Overview</h2>
+<h3 id="purpose">Purpose</h3>
+<p>The aim of the Avro IDL language is to enable developers to author schemata in a way that feels more similar to common programming languages like Java, C++, or Python. Additionally, the Avro IDL language may feel more familiar for those users who have previously used the interface description languages (IDLs) in other frameworks like Thrift, Protocol Buffers, or CORBA.</p>
+<h3 id="usage">Usage</h3>
+<p>Each Avro IDL file defines a single Avro Protocol, and thus generates as its output a JSON-format Avro Protocol file with extension .avpr.</p>
+<p>To convert a <em>.avdl</em> file into a <em>.avpr</em> file, it may be processed by the <code>idl</code> tool. For example:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ java -jar avro-tools.jar idl src/test/idl/input/namespaces.avdl /tmp/namespaces.avpr
+$ head /tmp/namespaces.avpr
+<span style="color:#ce5c00;font-weight:bold">{</span>
+  <span style="color:#4e9a06">&#34;protocol&#34;</span> : <span style="color:#4e9a06">&#34;TestNamespace&#34;</span>,
+  <span style="color:#4e9a06">&#34;namespace&#34;</span> : <span style="color:#4e9a06">&#34;avro.test.protocol&#34;</span>,
+</code></pre></div><p>The <code>idl</code> tool can also process input to and from <em>stdin</em> and <em>stdout</em>. See <code>idl --help</code> for full usage information.</p>
+<p>A Maven plugin is also provided to compile .avdl files. To use it, add something like the following to your pom.xml:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#204a87;font-weight:bold">&lt;build&gt;</span>
+  <span style="color:#204a87;font-weight:bold">&lt;plugins&gt;</span>
+    <span style="color:#204a87;font-weight:bold">&lt;plugin&gt;</span>
+      <span style="color:#204a87;font-weight:bold">&lt;groupId&gt;</span>org.apache.avro<span style="color:#204a87;font-weight:bold">&lt;/groupId&gt;</span>
+      <span style="color:#204a87;font-weight:bold">&lt;artifactId&gt;</span>avro-maven-plugin<span style="color:#204a87;font-weight:bold">&lt;/artifactId&gt;</span>
+      <span style="color:#204a87;font-weight:bold">&lt;executions&gt;</span>
+        <span style="color:#204a87;font-weight:bold">&lt;execution&gt;</span>
+          <span style="color:#204a87;font-weight:bold">&lt;goals&gt;</span>
+            <span style="color:#204a87;font-weight:bold">&lt;goal&gt;</span>idl-protocol<span style="color:#204a87;font-weight:bold">&lt;/goal&gt;</span>
+          <span style="color:#204a87;font-weight:bold">&lt;/goals&gt;</span>
+        <span style="color:#204a87;font-weight:bold">&lt;/execution&gt;</span>
+      <span style="color:#204a87;font-weight:bold">&lt;/executions&gt;</span>
+    <span style="color:#204a87;font-weight:bold">&lt;/plugin&gt;</span>
+  <span style="color:#204a87;font-weight:bold">&lt;/plugins&gt;</span>
+<span style="color:#204a87;font-weight:bold">&lt;/build&gt;</span>
+</code></pre></div><h2 id="defining-a-protocol-in-avro-idl">Defining a Protocol in Avro IDL</h2>
+<p>An Avro IDL file consists of exactly one protocol definition. The minimal protocol is defined by the following code:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000">protocol</span> <span style="color:#000">MyProtocol</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><p>This is equivalent to (and generates) the following JSON protocol definition:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#000;font-weight:bold">{</span>
+<span style="color:#204a87;font-weight:bold">&#34;protocol&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;MyProtocol&#34;</span><span style="color:#000;font-weight:bold">,</span>
+  <span style="color:#204a87;font-weight:bold">&#34;types&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[</span> <span style="color:#000;font-weight:bold">],</span>
+  <span style="color:#204a87;font-weight:bold">&#34;messages&#34;</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>The namespace of the protocol may be changed using the @namespace annotation:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#5c35cc;font-weight:bold">@namespace</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;mynamespace&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+<span style="color:#000">protocol</span> <span style="color:#000">MyProtocol</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><p>This notation is used throughout Avro IDL as a way of specifying properties for the annotated element, as will be described later in this document.</p>
+<p>Protocols in Avro IDL can contain the following items:</p>
+<ul>
+<li>Imports of external protocol and schema files.</li>
+<li>Definitions of named schemata, including records, errors, enums, and fixeds.</li>
+<li>Definitions of RPC messages</li>
+</ul>
+<h2 id="imports">Imports</h2>
+<p>Files may be imported in one of three formats:</p>
+<ul>
+<li>
+<p>An IDL file may be imported with a statement like:</p>
+<p><code>import idl &quot;foo.avdl&quot;;</code></p>
+</li>
+<li>
+<p>A JSON protocol file may be imported with a statement like:</p>
+<p><code>import protocol &quot;foo.avpr&quot;;</code></p>
+</li>
+<li>
+<p>A JSON schema file may be imported with a statement like:</p>
+<p><code>import schema &quot;foo.avsc&quot;;</code></p>
+</li>
+</ul>
+<p>Messages and types in the imported file are added to this file&rsquo;s protocol.</p>
+<p>Imported file names are resolved relative to the current IDL file.</p>
+<h2 id="defining-an-enumeration">Defining an Enumeration</h2>
+<p>Enums are defined in Avro IDL using a syntax similar to C or Java. An Avro Enum supports optional default values. In the case that a reader schema is unable to recognize a symbol written by the writer, the reader will fall back to using the defined default value. This default is only used when an incompatible symbol is read. It is not used if the enum field is missing.</p>
+<p>Example Writer Enum Definition</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#204a87;font-weight:bold">enum</span> <span style="color:#000">Shapes</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+  <span style="color:#000">SQUARE</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">TRIANGLE</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">CIRCLE</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">OVAL</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><p>Example Reader Enum Definition</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#204a87;font-weight:bold">enum</span> <span style="color:#000">Shapes</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+  <span style="color:#000">SQUARE</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">TRIANGLE</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">CIRCLE</span>
+<span style="color:#ce5c00;font-weight:bold">}</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">CIRCLE</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</code></pre></div><p>In the above example, the reader will use the default value of <code>CIRCLE</code> whenever reading data written with the <code>OVAL</code> symbol of the writer. Also note that, unlike the JSON format, anonymous enums cannot be defined.</p>
+<h2 id="defining-a-fixed-length-field">Defining a Fixed Length Field</h2>
+<p>Fixed fields are defined using the following syntax:</p>
+<pre><code>fixed MD5(16);
+</code></pre><p>This example defines a fixed-length type called MD5 which contains 16 bytes.</p>
+<h2 id="defining-records-and-errors">Defining Records and Errors</h2>
+<p>Records are defined in Avro IDL using a syntax similar to a struct definition in C:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000">record</span> <span style="color:#000">Employee</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+  <span style="color:#000">string</span> <span style="color:#000">name</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">boolean</span> <span style="color:#000">active</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">true</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">salary</span><span style="color:#ce5c00;font-weight:bold">;</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><p>The above example defines a record with the name “Employee” with three fields.</p>
+<p>To define an error, simply use the keyword <em>error</em> instead of <em>record</em>. For example:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000">error</span> <span style="color:#000">Kaboom</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+  <span style="color:#000">string</span> <span style="color:#000">explanation</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">result_code</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">1</span><span style="color:#ce5c00;font-weight:bold">;</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><p>Each field in a record or error consists of a type and a name, optional property annotations and an optional default value.</p>
+<p>A type reference in Avro IDL must be one of:</p>
+<ul>
+<li>A primitive type</li>
+<li>A logical type</li>
+<li>A named schema defined prior to this usage in the same Protocol</li>
+<li>A complex type (array, map, or union)</li>
+</ul>
+<h3 id="primitive-types">Primitive Types</h3>
+<p>The primitive types supported by Avro IDL are the same as those supported by Avro&rsquo;s JSON format. This list includes <em>int</em>, <em>long</em>, <em>string</em>, <em>boolean</em>, <em>float</em>, <em>double</em>, <em>null</em>, and <em>bytes</em>.</p>
+<h3 id="logical-types">Logical Types</h3>
+<p>Some of the logical types supported by Avro&rsquo;s JSON format are also supported by Avro IDL. The currently supported types are:</p>
+<ul>
+<li><em>decimal</em> (logical type decimal)</li>
+<li><em>date</em> (logical type date)</li>
+<li><em>time_ms</em> (logical type time-millis)</li>
+<li><em>timestamp_ms</em> (logical type timestamp-millis)</li>
+</ul>
+<p>TODO FIX LINKS ABOVE</p>
+<p>For example:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000">record</span> <span style="color:#000">Job</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+  <span style="color:#000">string</span> <span style="color:#000">jobid</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#000">date</span> <span style="color:#000">submitDate</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#000">time_ms</span> <span style="color:#000">submitTime</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#000">timestamp_ms</span> <span style="color:#000">finishTime</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#000">decimal</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">9</span><span style="color:#ce5c00;font-weight:bold">,</span><span style="color:#000">2</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#000">finishRatio</span><span style="color:#ce5c00;font-weight:bold">;</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><h3 id="references-to-named-schemata">References to Named Schemata</h3>
+<p>If a named schema has already been defined in the same Avro IDL file, it may be referenced by name as if it were a primitive type:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000">record</span> <span style="color:#000">Card</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+  <span style="color:#000">Suit</span> <span style="color:#000">suit</span><span style="color:#ce5c00;font-weight:bold">;</span> <span style="color:#8f5902;font-style:italic">// refers to the enum Card defined above
+</span><span style="color:#8f5902;font-style:italic"></span>  <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">number</span><span style="color:#ce5c00;font-weight:bold">;</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><h3 id="default-values">Default Values</h3>
+<p>Default values for fields may be optionally specified by using an equals sign after the field name followed by a JSON expression indicating the default value. This JSON is interpreted as described in the spec. TODO fix link!</p>
+<h3 id="complex-types">Complex Types</h3>
+<h4 id="arrays">Arrays</h4>
+<p>Array types are written in a manner that will seem familiar to C++ or Java programmers. An array of any type t is denoted <code>array&lt;t&gt;</code>. For example, an array of strings is denoted <code>array&lt;string&gt;</code>, and a multidimensional array of Foo records would be <code>array&lt;array&lt;Foo&gt;&gt;</code>.</p>
+<h4 id="maps">Maps</h4>
+<p>Map types are written similarly to array types. An array that contains values of type t is written <code>map&lt;t&gt;</code>. As in the JSON schema format, all maps contain <code>string</code>-type keys.</p>
+<h4 id="unions">Unions</h4>
+<p>Union types are denoted as <code>union { typeA, typeB, typeC, ... }</code>. For example, this record contains a string field that is optional (unioned with null):</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000">record</span> <span style="color:#000">RecordWithUnion</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+  <span style="color:#000">union</span> <span style="color:#ce5c00;font-weight:bold">{</span> <span style="color:#204a87;font-weight:bold">null</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">string</span> <span style="color:#ce5c00;font-weight:bold">}</span> <span style="color:#000">optionalString</span><span style="color:#ce5c00;font-weight:bold">;</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><p>Note that the same restrictions apply to Avro IDL unions as apply to unions defined in the JSON format; namely, a record may not contain multiple elements of the same type.</p>
+<h2 id="defining-rpc-messages">Defining RPC Messages</h2>
+<p>The syntax to define an RPC message within a Avro IDL protocol is similar to the syntax for a method declaration within a C header file or a Java interface. To define an RPC message add which takes two arguments named <em>foo</em> and <em>bar</em>, returning an <em>int</em>, simply include the following definition within the protocol:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">add</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">foo</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">bar</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">0</span><span style="color:#ce5c00;font-weight:bold">);</span>
+</code></pre></div><p>Message arguments, like record fields, may specify default values.</p>
+<p>To define a message with no response, you may use the alias <em>void</em>, equivalent to the Avro <em>null</em> type:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">logMessage</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">string</span> <span style="color:#000">message</span><span style="color:#ce5c00;font-weight:bold">);</span>
+</code></pre></div><p>If you have previously defined an error type within the same protocol, you may declare that a message can throw this error using the syntax:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">goKaboom</span><span style="color:#ce5c00;font-weight:bold">()</span> <span style="color:#204a87;font-weight:bold">throws</span> <span style="color:#000">Kaboom</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</code></pre></div><p>To define a one-way message, use the keyword <code>oneway</code> after the parameter list, for example:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">fireAndForget</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">string</span> <span style="color:#000">message</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#000">oneway</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</code></pre></div><h2 id="other-language-features">Other Language Features</h2>
+<h3 id="comments">Comments</h3>
+<p>All Java-style comments are supported within a Avro IDL file. Any text following <em>//</em> on a line is ignored, as is any text between <em>/*</em> and <em>*/</em>, possibly spanning multiple lines.</p>
+<p>Comments that begin with <em>/**</em> are used as the documentation string for the type or field definition that follows the comment.</p>
+<h3 id="escaping-identifiers">Escaping Identifiers</h3>
+<p>Occasionally, one will need to use a reserved language keyword as an identifier. In order to do so, backticks (`) may be used to escape the identifier. For example, to define a message with the literal name error, you may write:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#a40000">`</span><span style="color:#000">error</span><span style="color:#a40000">`</span><span style="color:#ce5c00;font-weight:bold">();</span>
+</code></pre></div><p>This syntax is allowed anywhere an identifier is expected.</p>
+<h3 id="annotations-for-ordering-and-namespaces">Annotations for Ordering and Namespaces</h3>
+<p>Java-style annotations may be used to add additional properties to types and fields throughout Avro IDL.</p>
+<p>For example, to specify the sort order of a field within a record, one may use the <code>@order</code> annotation before the field name as follows:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000">record</span> <span style="color:#000">MyRecord</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+  <span style="color:#000">string</span> <span style="color:#5c35cc;font-weight:bold">@order</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;ascending&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#000">myAscendingSortField</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#000">string</span> <span style="color:#5c35cc;font-weight:bold">@order</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;descending&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>  <span style="color:#000">myDescendingField</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#000">string</span> <span style="color:#5c35cc;font-weight:bold">@order</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;ignore&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#000">myIgnoredField</span><span style="color:#ce5c00;font-weight:bold">;</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><p>A field&rsquo;s type may also be preceded by annotations, e.g.:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000">record</span> <span style="color:#000">MyRecord</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+  <span style="color:#5c35cc;font-weight:bold">@java</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">class</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;java.util.ArrayList&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#000">array</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">string</span><span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">myStrings</span><span style="color:#ce5c00;font-weight:bold">;</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><p>This can be used to support java classes that can be serialized/deserialized via their <code>toString</code>/<code>String constructor</code>, e.g.:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000">record</span> <span style="color:#000">MyRecord</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+  <span style="color:#5c35cc;font-weight:bold">@java</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">class</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;java.math.BigDecimal&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#000">string</span> <span style="color:#000">value</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#5c35cc;font-weight:bold">@java</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">key</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">class</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;java.io.File&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#000">map</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">string</span><span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">fileStates</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#000">array</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#5c35cc;font-weight:bold">@java</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">class</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;java.math.BigDecimal&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#000">string</span><span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">weights</span><span style="color:#ce5c00;font-weight:bold">;</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><p>Similarly, a <code>@namespace</code> annotation may be used to modify the namespace when defining a named schema. For example:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#5c35cc;font-weight:bold">@namespace</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.apache.avro.firstNamespace&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+<span style="color:#000">protocol</span> <span style="color:#000">MyProto</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+  <span style="color:#5c35cc;font-weight:bold">@namespace</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.apache.avro.someOtherNamespace&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+  <span style="color:#000">record</span> <span style="color:#000">Foo</span> <span style="color:#ce5c00;font-weight:bold">{}</span>
 
-<div class="pageinfo pageinfo-primary">
-<p>This is a placeholder page that shows you how to use this template site.</p>
+  <span style="color:#000">record</span> <span style="color:#000">Bar</span> <span style="color:#ce5c00;font-weight:bold">{}</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><p>will define a protocol in the <em>firstNamespace</em> namespace. The record <em>Foo</em> will be defined in <em>someOtherNamespace</em> and <em>Bar</em> will be defined in <em>firstNamespace</em> as it inherits its default from its container.</p>
+<p>Type and field aliases are specified with the <code>@aliases</code> annotation as follows:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#5c35cc;font-weight:bold">@aliases</span><span style="color:#ce5c00;font-weight:bold">([</span><span style="color:#4e9a06">&#34;org.old.OldRecord&#34;</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;org.ancient.AncientRecord&#34;</span><span style="color:#ce5c00;font-weight:bold">])</span>
+<span style="color:#000">record</span> <span style="color:#000">MyRecord</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+  <span style="color:#000">string</span> <span style="color:#5c35cc;font-weight:bold">@aliases</span><span style="color:#ce5c00;font-weight:bold">([</span><span style="color:#4e9a06">&#34;oldField&#34;</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;ancientField&#34;</span><span style="color:#ce5c00;font-weight:bold">])</span> <span style="color:#000">myNewField</span><span style="color:#ce5c00;font-weight:bold">;</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><p>Some annotations like those listed above are handled specially. All other annotations are added as properties to the protocol, message, schema or field.</p>
+<h2 id="complete-example">Complete Example</h2>
+<p>The following is a complete example of a Avro IDL file that shows most of the above features:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#8f5902;font-style:italic">/**
+</span><span style="color:#8f5902;font-style:italic"> * An example protocol in Avro IDL
+</span><span style="color:#8f5902;font-style:italic"> */</span>
+<span style="color:#5c35cc;font-weight:bold">@namespace</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;org.apache.avro.test&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+<span style="color:#000">protocol</span> <span style="color:#000">Simple</span> <span style="color:#ce5c00;font-weight:bold">{</span>
 
-</div>
+  <span style="color:#5c35cc;font-weight:bold">@aliases</span><span style="color:#ce5c00;font-weight:bold">([</span><span style="color:#4e9a06">&#34;org.foo.KindOf&#34;</span><span style="color:#ce5c00;font-weight:bold">])</span>
+  <span style="color:#204a87;font-weight:bold">enum</span> <span style="color:#000">Kind</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+    <span style="color:#000">FOO</span><span style="color:#ce5c00;font-weight:bold">,</span>
+    <span style="color:#000">BAR</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#8f5902;font-style:italic">// the bar enum value
+</span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">BAZ</span>
+  <span style="color:#ce5c00;font-weight:bold">}</span>
 
-<p>Tutorials are <strong>complete worked examples</strong> made up of <strong>multiple tasks</strong> that guide the user through a relatively simple but realistic scenario: building an application that uses some of your project’s features, for example. If you have already created some Examples for your project you can base Tutorials on them. This section is <strong>optional</strong>. However, remember that although you may not need this section at first, having tutorials can be useful to help your users engage with your example code, especially if there are aspects that need more explanation than you can easily provide in code comments.</p>
+  <span style="color:#000">fixed</span> <span style="color:#000">MD5</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">16</span><span style="color:#ce5c00;font-weight:bold">);</span>
+
+  <span style="color:#000">record</span> <span style="color:#000">TestRecord</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+    <span style="color:#5c35cc;font-weight:bold">@order</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;ignore&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+    <span style="color:#000">string</span> <span style="color:#000">name</span><span style="color:#ce5c00;font-weight:bold">;</span>
+
+    <span style="color:#5c35cc;font-weight:bold">@order</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#4e9a06">&#34;descending&#34;</span><span style="color:#ce5c00;font-weight:bold">)</span>
+    <span style="color:#000">Kind</span> <span style="color:#000">kind</span><span style="color:#ce5c00;font-weight:bold">;</span>
+
+    <span style="color:#000">MD5</span> <span style="color:#000">hash</span><span style="color:#ce5c00;font-weight:bold">;</span>
+
+    <span style="color:#000">union</span> <span style="color:#ce5c00;font-weight:bold">{</span> <span style="color:#000">MD5</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">null</span><span style="color:#ce5c00;font-weight:bold">}</span> <span style="color:#5c35cc;font-weight:bold">@aliases</span><span style="color:#ce5c00;font-weight:bold">([</span><span style="color:#4e9a06">&#34;hash&#34;</span><span style="color:#ce5c00;font-weight:bold">])</span> <span style="color:#000">nullableHash</span><span style="color:#ce5c00;font-weight:bold">;</span>
+
+    <span style="color:#000">array</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">long</span><span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">arrayOfLongs</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#ce5c00;font-weight:bold">}</span>
+
+  <span style="color:#000">error</span> <span style="color:#000">TestError</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+    <span style="color:#000">string</span> <span style="color:#000">message</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#ce5c00;font-weight:bold">}</span>
+
+  <span style="color:#000">string</span> <span style="color:#000">hello</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">string</span> <span style="color:#000">greeting</span><span style="color:#ce5c00;font-weight:bold">);</span>
+  <span style="color:#000">TestRecord</span> <span style="color:#000">echo</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">TestRecord</span> <span style="color:#a40000">`</span><span style="color:#000">record</span><span style="color:#a40000">`</span><span style="color:#ce5c00;font-weight:bold">);</span>
+  <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">add</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">arg1</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">arg2</span><span style="color:#ce5c00;font-weight:bold">);</span>
+  <span style="color:#000">bytes</span> <span style="color:#000">echoBytes</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">bytes</span> <span style="color:#000">data</span><span style="color:#ce5c00;font-weight:bold">);</span>
+  <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#a40000">`</span><span style="color:#000">error</span><span style="color:#a40000">`</span><span style="color:#ce5c00;font-weight:bold">()</span> <span style="color:#204a87;font-weight:bold">throws</span> <span style="color:#000">TestError</span><span style="color:#ce5c00;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">ping</span><span style="color:#ce5c00;font-weight:bold">()</span> <span style="color:#000">oneway</span><span style="color:#ce5c00;font-weight:bold">;</span>
+<span style="color:#ce5c00;font-weight:bold">}</span>
+</code></pre></div><p>Additional examples may be found in the Avro source tree under the <code>src/test/idl/input</code> directory.</p>
 
 </div>
 
@@ -3203,319 +3390,6 @@ part-00000.avro  _SUCCESS
   
 
   
-    
-    
-	
-    
-
-<div class="td-content" style="page-break-before: always">
-    
-	<h1 id="pg-06285b237e6e217b13f8d9c941a9de18">7.1 - Multi-Bear Domicile Setup</h1>
-    <div class="lead">A short lead description about this content page. It can be <strong>bold</strong> or <em>italic</em> and can be split over multiple paragraphs.</div>
-	
-
-<div class="pageinfo pageinfo-primary">
-<p>This is a placeholder page. Replace it with your own content.</p>
-
-</div>
-
-<p>Text can be <strong>bold</strong>, <em>italic</em>, or <del>strikethrough</del>. <a href="https://gohugo.io">Links</a> should be blue with no underlines (unless hovered over).</p>
-<p>There should be whitespace between paragraphs. Vape migas chillwave sriracha poutine try-hard distillery. Tattooed shabby chic small batch, pabst art party heirloom letterpress air plant pop-up. Sustainable chia skateboard art party banjo cardigan normcore affogato vexillologist quinoa meggings man bun master cleanse shoreditch readymade. Yuccie prism four dollar toast tbh cardigan iPhone, tumblr listicle live-edge VHS. Pug lyft normcore hot chicken biodiesel, actually keffiyeh thundercats photo booth pour-over twee fam food truck microdosing banh mi. Vice activated charcoal raclette unicorn live-edge post-ironic. Heirloom vexillologist coloring book, beard deep v letterpress echo park humblebrag tilde.</p>
-<p>90&rsquo;s four loko seitan photo booth gochujang freegan tumeric listicle fam ugh humblebrag. Bespoke leggings gastropub, biodiesel brunch pug fashion axe meh swag art party neutra deep v chia. Enamel pin fanny pack knausgaard tofu, artisan cronut hammock meditation occupy master cleanse chartreuse lumbersexual. Kombucha kogi viral truffaut synth distillery single-origin coffee ugh slow-carb marfa selfies. Pitchfork schlitz semiotics fanny pack, ugh artisan vegan vaporware hexagon. Polaroid fixie post-ironic venmo wolf ramps <strong>kale chips</strong>.</p>
-<blockquote>
-<p>There should be no margin above this first sentence.</p>
-<p>Blockquotes should be a lighter gray with a border along the left side in the secondary color.</p>
-<p>There should be no margin below this final sentence.</p>
-</blockquote>
-<h2 id="first-header-2">First Header 2</h2>
-<p>This is a normal paragraph following a header. Knausgaard kale chips snackwave microdosing cronut copper mug swag synth bitters letterpress glossier <strong>craft beer</strong>. Mumblecore bushwick authentic gochujang vegan chambray meditation jean shorts irony. Viral farm-to-table kale chips, pork belly palo santo distillery activated charcoal aesthetic jianbing air plant woke lomo VHS organic. Tattooed locavore succulents heirloom, small batch sriracha echo park DIY af. Shaman you probably haven&rsquo;t heard of them copper mug, crucifix green juice vape <em>single-origin coffee</em> brunch actually. Mustache etsy vexillologist raclette authentic fam. Tousled beard humblebrag asymmetrical. I love turkey, I love my job, I love my friends, I love Chardonnay!</p>
-<p>Deae legum paulatimque terra, non vos mutata tacet: dic. Vocant docuique me plumas fila quin afuerunt copia haec o neque.</p>
-<p>On big screens, paragraphs and headings should not take up the full container width, but we want tables, code blocks and similar to take the full width.</p>
-<p>Scenester tumeric pickled, authentic crucifix post-ironic fam freegan VHS pork belly 8-bit yuccie PBR&amp;B. <strong>I love this life we live in</strong>.</p>
-<h2 id="second-header-2">Second Header 2</h2>
-<blockquote>
-<p>This is a blockquote following a header. Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.</p>
-</blockquote>
-<h3 id="header-3">Header 3</h3>
-<pre><code>This is a code block following a header.
-</code></pre><p>Next level leggings before they sold out, PBR&amp;B church-key shaman echo park. Kale chips occupy godard whatever pop-up freegan pork belly selfies. Gastropub Belinda subway tile woke post-ironic seitan. Shabby chic man bun semiotics vape, chia messenger bag plaid cardigan.</p>
-<h4 id="header-4">Header 4</h4>
-<ul>
-<li>This is an unordered list following a header.</li>
-<li>This is an unordered list following a header.</li>
-<li>This is an unordered list following a header.</li>
-</ul>
-<h5 id="header-5">Header 5</h5>
-<ol>
-<li>This is an ordered list following a header.</li>
-<li>This is an ordered list following a header.</li>
-<li>This is an ordered list following a header.</li>
-</ol>
-<h6 id="header-6">Header 6</h6>
-<table>
-<thead>
-<tr>
-<th>What</th>
-<th>Follows</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A table</td>
-<td>A header</td>
-</tr>
-<tr>
-<td>A table</td>
-<td>A header</td>
-</tr>
-<tr>
-<td>A table</td>
-<td>A header</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p>There&rsquo;s a horizontal rule above and below this.</p>
-<hr>
-<p>Here is an unordered list:</p>
-<ul>
-<li>Liverpool F.C.</li>
-<li>Chelsea F.C.</li>
-<li>Manchester United F.C.</li>
-</ul>
-<p>And an ordered list:</p>
-<ol>
-<li>Michael Brecker</li>
-<li>Seamus Blake</li>
-<li>Branford Marsalis</li>
-</ol>
-<p>And an unordered task list:</p>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> Create a Hugo theme</li>
-<li><input checked="" disabled="" type="checkbox"> Add task lists to it</li>
-<li><input disabled="" type="checkbox"> Take a vacation</li>
-</ul>
-<p>And a &ldquo;mixed&rdquo; task list:</p>
-<ul>
-<li><input disabled="" type="checkbox"> Pack bags</li>
-<li>?</li>
-<li><input disabled="" type="checkbox"> Travel!</li>
-</ul>
-<p>And a nested list:</p>
-<ul>
-<li>Jackson 5
-<ul>
-<li>Michael</li>
-<li>Tito</li>
-<li>Jackie</li>
-<li>Marlon</li>
-<li>Jermaine</li>
-</ul>
-</li>
-<li>TMNT
-<ul>
-<li>Leonardo</li>
-<li>Michelangelo</li>
-<li>Donatello</li>
-<li>Raphael</li>
-</ul>
-</li>
-</ul>
-<p>Definition lists can be used with Markdown syntax. Definition headers are bold.</p>
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-<hr>
-<p>Tables should have bold headings and alternating shaded rows.</p>
-<table>
-<thead>
-<tr>
-<th>Artist</th>
-<th>Album</th>
-<th>Year</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Michael Jackson</td>
-<td>Thriller</td>
-<td>1982</td>
-</tr>
-<tr>
-<td>Prince</td>
-<td>Purple Rain</td>
-<td>1984</td>
-</tr>
-<tr>
-<td>Beastie Boys</td>
-<td>License to Ill</td>
-<td>1986</td>
-</tr>
-</tbody>
-</table>
-<p>If a table is too wide, it should scroll horizontally.</p>
-<table>
-<thead>
-<tr>
-<th>Artist</th>
-<th>Album</th>
-<th>Year</th>
-<th>Label</th>
-<th>Awards</th>
-<th>Songs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Michael Jackson</td>
-<td>Thriller</td>
-<td>1982</td>
-<td>Epic Records</td>
-<td>Grammy Award for Album of the Year, American Music Award for Favorite Pop/Rock Album, American Music Award for Favorite Soul/R&amp;B Album, Brit Award for Best Selling Album, Grammy Award for Best Engineered Album, Non-Classical</td>
-<td>Wanna Be Startin' Somethin', Baby Be Mine, The Girl Is Mine, Thriller, Beat It, Billie Jean, Human Nature, P.Y.T. (Pretty Young Thing), The Lady in My Life</td>
-</tr>
-<tr>
-<td>Prince</td>
-<td>Purple Rain</td>
-<td>1984</td>
-<td>Warner Brothers Records</td>
-<td>Grammy Award for Best Score Soundtrack for Visual Media, American Music Award for Favorite Pop/Rock Album, American Music Award for Favorite Soul/R&amp;B Album, Brit Award for Best Soundtrack/Cast Recording, Grammy Award for Best Rock Performance by a Duo or Group with Vocal</td>
-<td>Let&rsquo;s Go Crazy, Take Me With U, The Beautiful Ones, Computer Blue, Darling Nikki, When Doves Cry, I Would Die 4 U, Baby I&rsquo;m a Star, Purple Rain</td>
-</tr>
-<tr>
-<td>Beastie Boys</td>
-<td>License to Ill</td>
-<td>1986</td>
-<td>Mercury Records</td>
-<td>noawardsbutthistablecelliswide</td>
-<td>Rhymin &amp; Stealin, The New Style, She&rsquo;s Crafty, Posse in Effect, Slow Ride, Girls, (You Gotta) Fight for Your Right, No Sleep Till Brooklyn, Paul Revere, Hold It Now, Hit It, Brass Monkey, Slow and Low, Time to Get Ill</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p>Code snippets like <code>var foo = &quot;bar&quot;;</code> can be shown inline.</p>
-<p>Also, <code>this should vertically align</code> <del><code>with this</code></del> <del>and this</del>.</p>
-<p>Code can also be shown in a block element.</p>
-<pre><code>foo := &quot;bar&quot;;
-bar := &quot;foo&quot;;
-</code></pre><p>Code can also use syntax highlighting.</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
-  <span style="color:#000">input</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#4e9a06">`var foo = &#34;bar&#34;;`</span>
-
-  <span style="color:#000">lexer</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">lexers</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Get</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;javascript&#34;</span><span style="color:#000;font-weight:bold">)</span>
-  <span style="color:#000">iterator</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">_</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">lexer</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Tokenise</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">input</span><span style="color:#000;font-weight:bold">)</span>
-  <span style="color:#000">style</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">styles</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Get</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;github&#34;</span><span style="color:#000;font-weight:bold">)</span>
-  <span style="color:#000">formatter</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">html</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">New</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">html</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">WithLineNumbers</span><span style="color:#000;font-weight:bold">())</span>
-
-  <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">buff</span> <span style="color:#000">bytes</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Buffer</span>
-  <span style="color:#000">formatter</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">buff</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">style</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">iterator</span><span style="color:#000;font-weight:bold">)</span>
-
-  <span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">buff</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">String</span><span style="color:#000;font-weight:bold">())</span>
-<span style="color:#000;font-weight:bold">}</span>
-</code></pre></div><pre><code>Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-</code></pre><p>Inline code inside table cells should still be distinguishable.</p>
-<table>
-<thead>
-<tr>
-<th>Language</th>
-<th>Code</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Javascript</td>
-<td><code>var foo = &quot;bar&quot;;</code></td>
-</tr>
-<tr>
-<td>Ruby</td>
-<td><code>foo = &quot;bar&quot;{</code></td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p>Small images should be shown at their actual size.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Picea_abies_shoot_with_buds%2C_Sogndal%2C_Norway.jpg/240px-Picea_abies_shoot_with_buds%2C_Sogndal%2C_Norway.jpg" alt=""></p>
-<p>Large images should always scale down and fit in the content container.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Picea_abies_shoot_with_buds%2C_Sogndal%2C_Norway.jpg/1024px-Picea_abies_shoot_with_buds%2C_Sogndal%2C_Norway.jpg" alt=""></p>
-<p><em>The photo above of the Spruce Picea abies shoot with foliage buds: Bjørn Erik Pedersen, CC-BY-SA.</em></p>
-<h2 id="components">Components</h2>
-<h3 id="alerts">Alerts</h3>
-<p>
-
-<div class="alert alert-primary" role="alert">
-
-
-    This is an alert.
-
-</div>
-
-
-
-<div class="alert alert-primary" role="alert">
-<h4 class="alert-heading">Note</h4>
-
-    This is an alert with a title.
-
-</div>
-
-
-
-<div class="alert alert-primary" role="alert">
-<h4 class="alert-heading">Note</h4>
-
-    This is an alert with a title and <strong>Markdown</strong>.
-
-</div>
-
-
-
-<div class="alert alert-success" role="alert">
-
-
-    This is a successful alert.
-
-</div>
-
-
-
-<div class="alert alert-warning" role="alert">
-
-
-    This is a warning.
-
-</div>
-
-
-
-<div class="alert alert-warning" role="alert">
-<h4 class="alert-heading">Warning</h4>
-
-    This is a warning with a title.
-
-</div>
-</p>
-<h2 id="another-heading">Another Heading</h2>
-<p>Add some sections here to see how the ToC looks like. Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.</p>
-<h3 id="this-document">This Document</h3>
-<p>Inguina genus: Anaphen post: lingua violente voce suae meus aetate diversi. Orbis unam nec flammaeque status deam Silenum erat et a ferrea. Excitus rigidum ait: vestro et Herculis convicia: nitidae deseruit coniuge Proteaque adiciam <em>eripitur</em>? Sitim noceat signa <em>probat quidem</em>. Sua longis <em>fugatis</em> quidem genae.</p>
-<h3 id="pixel-count">Pixel Count</h3>
-<p>Tilde photo booth wayfarers cliche lomo intelligentsia man braid kombucha vaporware farm-to-table mixtape portland. PBR&amp;B pickled cornhole ugh try-hard ethical subway tile. Fixie paleo intelligentsia pabst. Ennui waistcoat vinyl gochujang. Poutine salvia authentic affogato, chambray lumbersexual shabby chic.</p>
-<h3 id="contact-info">Contact Info</h3>
-<p>Plaid hell of cred microdosing, succulents tilde pour-over. Offal shabby chic 3 wolf moon blue bottle raw denim normcore poutine pork belly.</p>
-<h3 id="external-links">External Links</h3>
-<p>Stumptown PBR&amp;B keytar plaid street art, forage XOXO pitchfork selvage affogato green juice listicle pickled everyday carry hashtag. Organic sustainable letterpress sartorial scenester intelligentsia swag bushwick. Put a bird on it stumptown neutra locavore. IPhone typewriter messenger bag narwhal. Ennui cold-pressed seitan flannel keytar, single-origin coffee adaptogen occupy yuccie williamsburg chillwave shoreditch forage waistcoat.</p>
-<pre><code>This is the final element on the page and there should be no margin below this.
-</code></pre>
-</div>
-
-
 
     
 	
@@ -3527,673 +3401,7 @@ bar := &quot;foo&quot;;
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-c86b0cbc9ee1f95a6facb6bff0282978">7.2 - Another Tutorial</h1>
-    <div class="lead">A short lead description about this content page. It can be <strong>bold</strong> or <em>italic</em> and can be split over multiple paragraphs.</div>
-	
-
-<div class="pageinfo pageinfo-primary">
-<p>This is a placeholder page. Replace it with your own content.</p>
-
-</div>
-
-<p>Text can be <strong>bold</strong>, <em>italic</em>, or <del>strikethrough</del>. <a href="https://gohugo.io">Links</a> should be blue with no underlines (unless hovered over).</p>
-<p>There should be whitespace between paragraphs. Vape migas chillwave sriracha poutine try-hard distillery. Tattooed shabby chic small batch, pabst art party heirloom letterpress air plant pop-up. Sustainable chia skateboard art party banjo cardigan normcore affogato vexillologist quinoa meggings man bun master cleanse shoreditch readymade. Yuccie prism four dollar toast tbh cardigan iPhone, tumblr listicle live-edge VHS. Pug lyft normcore hot chicken biodiesel, actually keffiyeh thundercats photo booth pour-over twee fam food truck microdosing banh mi. Vice activated charcoal raclette unicorn live-edge post-ironic. Heirloom vexillologist coloring book, beard deep v letterpress echo park humblebrag tilde.</p>
-<p>90&rsquo;s four loko seitan photo booth gochujang freegan tumeric listicle fam ugh humblebrag. Bespoke leggings gastropub, biodiesel brunch pug fashion axe meh swag art party neutra deep v chia. Enamel pin fanny pack knausgaard tofu, artisan cronut hammock meditation occupy master cleanse chartreuse lumbersexual. Kombucha kogi viral truffaut synth distillery single-origin coffee ugh slow-carb marfa selfies. Pitchfork schlitz semiotics fanny pack, ugh artisan vegan vaporware hexagon. Polaroid fixie post-ironic venmo wolf ramps <strong>kale chips</strong>.</p>
-<blockquote>
-<p>There should be no margin above this first sentence.</p>
-<p>Blockquotes should be a lighter gray with a border along the left side in the secondary color.</p>
-<p>There should be no margin below this final sentence.</p>
-</blockquote>
-<h2 id="first-header-2">First Header 2</h2>
-<p>This is a normal paragraph following a header. Knausgaard kale chips snackwave microdosing cronut copper mug swag synth bitters letterpress glossier <strong>craft beer</strong>. Mumblecore bushwick authentic gochujang vegan chambray meditation jean shorts irony. Viral farm-to-table kale chips, pork belly palo santo distillery activated charcoal aesthetic jianbing air plant woke lomo VHS organic. Tattooed locavore succulents heirloom, small batch sriracha echo park DIY af. Shaman you probably haven&rsquo;t heard of them copper mug, crucifix green juice vape <em>single-origin coffee</em> brunch actually. Mustache etsy vexillologist raclette authentic fam. Tousled beard humblebrag asymmetrical. I love turkey, I love my job, I love my friends, I love Chardonnay!</p>
-<p>Deae legum paulatimque terra, non vos mutata tacet: dic. Vocant docuique me plumas fila quin afuerunt copia haec o neque.</p>
-<p>On big screens, paragraphs and headings should not take up the full container width, but we want tables, code blocks and similar to take the full width.</p>
-<p>Scenester tumeric pickled, authentic crucifix post-ironic fam freegan VHS pork belly 8-bit yuccie PBR&amp;B. <strong>I love this life we live in</strong>.</p>
-<h2 id="second-header-2">Second Header 2</h2>
-<blockquote>
-<p>This is a blockquote following a header. Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.</p>
-</blockquote>
-<h3 id="header-3">Header 3</h3>
-<pre><code>This is a code block following a header.
-</code></pre><p>Next level leggings before they sold out, PBR&amp;B church-key shaman echo park. Kale chips occupy godard whatever pop-up freegan pork belly selfies. Gastropub Belinda subway tile woke post-ironic seitan. Shabby chic man bun semiotics vape, chia messenger bag plaid cardigan.</p>
-<h4 id="header-4">Header 4</h4>
-<ul>
-<li>This is an unordered list following a header.</li>
-<li>This is an unordered list following a header.</li>
-<li>This is an unordered list following a header.</li>
-</ul>
-<h5 id="header-5">Header 5</h5>
-<ol>
-<li>This is an ordered list following a header.</li>
-<li>This is an ordered list following a header.</li>
-<li>This is an ordered list following a header.</li>
-</ol>
-<h6 id="header-6">Header 6</h6>
-<table>
-<thead>
-<tr>
-<th>What</th>
-<th>Follows</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A table</td>
-<td>A header</td>
-</tr>
-<tr>
-<td>A table</td>
-<td>A header</td>
-</tr>
-<tr>
-<td>A table</td>
-<td>A header</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p>There&rsquo;s a horizontal rule above and below this.</p>
-<hr>
-<p>Here is an unordered list:</p>
-<ul>
-<li>Liverpool F.C.</li>
-<li>Chelsea F.C.</li>
-<li>Manchester United F.C.</li>
-</ul>
-<p>And an ordered list:</p>
-<ol>
-<li>Michael Brecker</li>
-<li>Seamus Blake</li>
-<li>Branford Marsalis</li>
-</ol>
-<p>And an unordered task list:</p>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> Create a Hugo theme</li>
-<li><input checked="" disabled="" type="checkbox"> Add task lists to it</li>
-<li><input disabled="" type="checkbox"> Take a vacation</li>
-</ul>
-<p>And a &ldquo;mixed&rdquo; task list:</p>
-<ul>
-<li><input disabled="" type="checkbox"> Pack bags</li>
-<li>?</li>
-<li><input disabled="" type="checkbox"> Travel!</li>
-</ul>
-<p>And a nested list:</p>
-<ul>
-<li>Jackson 5
-<ul>
-<li>Michael</li>
-<li>Tito</li>
-<li>Jackie</li>
-<li>Marlon</li>
-<li>Jermaine</li>
-</ul>
-</li>
-<li>TMNT
-<ul>
-<li>Leonardo</li>
-<li>Michelangelo</li>
-<li>Donatello</li>
-<li>Raphael</li>
-</ul>
-</li>
-</ul>
-<p>Definition lists can be used with Markdown syntax. Definition headers are bold.</p>
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-<hr>
-<p>Tables should have bold headings and alternating shaded rows.</p>
-<table>
-<thead>
-<tr>
-<th>Artist</th>
-<th>Album</th>
-<th>Year</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Michael Jackson</td>
-<td>Thriller</td>
-<td>1982</td>
-</tr>
-<tr>
-<td>Prince</td>
-<td>Purple Rain</td>
-<td>1984</td>
-</tr>
-<tr>
-<td>Beastie Boys</td>
-<td>License to Ill</td>
-<td>1986</td>
-</tr>
-</tbody>
-</table>
-<p>If a table is too wide, it should scroll horizontally.</p>
-<table>
-<thead>
-<tr>
-<th>Artist</th>
-<th>Album</th>
-<th>Year</th>
-<th>Label</th>
-<th>Awards</th>
-<th>Songs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Michael Jackson</td>
-<td>Thriller</td>
-<td>1982</td>
-<td>Epic Records</td>
-<td>Grammy Award for Album of the Year, American Music Award for Favorite Pop/Rock Album, American Music Award for Favorite Soul/R&amp;B Album, Brit Award for Best Selling Album, Grammy Award for Best Engineered Album, Non-Classical</td>
-<td>Wanna Be Startin' Somethin', Baby Be Mine, The Girl Is Mine, Thriller, Beat It, Billie Jean, Human Nature, P.Y.T. (Pretty Young Thing), The Lady in My Life</td>
-</tr>
-<tr>
-<td>Prince</td>
-<td>Purple Rain</td>
-<td>1984</td>
-<td>Warner Brothers Records</td>
-<td>Grammy Award for Best Score Soundtrack for Visual Media, American Music Award for Favorite Pop/Rock Album, American Music Award for Favorite Soul/R&amp;B Album, Brit Award for Best Soundtrack/Cast Recording, Grammy Award for Best Rock Performance by a Duo or Group with Vocal</td>
-<td>Let&rsquo;s Go Crazy, Take Me With U, The Beautiful Ones, Computer Blue, Darling Nikki, When Doves Cry, I Would Die 4 U, Baby I&rsquo;m a Star, Purple Rain</td>
-</tr>
-<tr>
-<td>Beastie Boys</td>
-<td>License to Ill</td>
-<td>1986</td>
-<td>Mercury Records</td>
-<td>noawardsbutthistablecelliswide</td>
-<td>Rhymin &amp; Stealin, The New Style, She&rsquo;s Crafty, Posse in Effect, Slow Ride, Girls, (You Gotta) Fight for Your Right, No Sleep Till Brooklyn, Paul Revere, Hold It Now, Hit It, Brass Monkey, Slow and Low, Time to Get Ill</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p>Code snippets like <code>var foo = &quot;bar&quot;;</code> can be shown inline.</p>
-<p>Also, <code>this should vertically align</code> <del><code>with this</code></del> <del>and this</del>.</p>
-<p>Code can also be shown in a block element.</p>
-<pre><code>foo := &quot;bar&quot;;
-bar := &quot;foo&quot;;
-</code></pre><p>Code can also use syntax highlighting.</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
-  <span style="color:#000">input</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#4e9a06">`var foo = &#34;bar&#34;;`</span>
-
-  <span style="color:#000">lexer</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">lexers</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Get</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;javascript&#34;</span><span style="color:#000;font-weight:bold">)</span>
-  <span style="color:#000">iterator</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">_</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">lexer</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Tokenise</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">input</span><span style="color:#000;font-weight:bold">)</span>
-  <span style="color:#000">style</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">styles</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Get</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;github&#34;</span><span style="color:#000;font-weight:bold">)</span>
-  <span style="color:#000">formatter</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">html</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">New</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">html</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">WithLineNumbers</span><span style="color:#000;font-weight:bold">())</span>
-
-  <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">buff</span> <span style="color:#000">bytes</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Buffer</span>
-  <span style="color:#000">formatter</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">buff</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">style</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">iterator</span><span style="color:#000;font-weight:bold">)</span>
-
-  <span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">buff</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">String</span><span style="color:#000;font-weight:bold">())</span>
-<span style="color:#000;font-weight:bold">}</span>
-</code></pre></div><pre><code>Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-</code></pre><p>Inline code inside table cells should still be distinguishable.</p>
-<table>
-<thead>
-<tr>
-<th>Language</th>
-<th>Code</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Javascript</td>
-<td><code>var foo = &quot;bar&quot;;</code></td>
-</tr>
-<tr>
-<td>Ruby</td>
-<td><code>foo = &quot;bar&quot;{</code></td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p>Small images should be shown at their actual size.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Picea_abies_shoot_with_buds%2C_Sogndal%2C_Norway.jpg/240px-Picea_abies_shoot_with_buds%2C_Sogndal%2C_Norway.jpg" alt=""></p>
-<p>Large images should always scale down and fit in the content container.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Picea_abies_shoot_with_buds%2C_Sogndal%2C_Norway.jpg/1024px-Picea_abies_shoot_with_buds%2C_Sogndal%2C_Norway.jpg" alt=""></p>
-<p><em>The photo above of the Spruce Picea abies shoot with foliage buds: Bjørn Erik Pedersen, CC-BY-SA.</em></p>
-<h2 id="components">Components</h2>
-<h3 id="alerts">Alerts</h3>
-<p>
-
-<div class="alert alert-primary" role="alert">
-
-
-    This is an alert.
-
-</div>
-
-
-
-<div class="alert alert-primary" role="alert">
-<h4 class="alert-heading">Note</h4>
-
-    This is an alert with a title.
-
-</div>
-
-
-
-<div class="alert alert-primary" role="alert">
-<h4 class="alert-heading">Note</h4>
-
-    This is an alert with a title and <strong>Markdown</strong>.
-
-</div>
-
-
-
-<div class="alert alert-success" role="alert">
-
-
-    This is a successful alert.
-
-</div>
-
-
-
-<div class="alert alert-warning" role="alert">
-
-
-    This is a warning.
-
-</div>
-
-
-
-<div class="alert alert-warning" role="alert">
-<h4 class="alert-heading">Warning</h4>
-
-    This is a warning with a title.
-
-</div>
-</p>
-<h2 id="another-heading">Another Heading</h2>
-<p>Add some sections here to see how the ToC looks like. Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.</p>
-<h3 id="this-document">This Document</h3>
-<p>Inguina genus: Anaphen post: lingua violente voce suae meus aetate diversi. Orbis unam nec flammaeque status deam Silenum erat et a ferrea. Excitus rigidum ait: vestro et Herculis convicia: nitidae deseruit coniuge Proteaque adiciam <em>eripitur</em>? Sitim noceat signa <em>probat quidem</em>. Sua longis <em>fugatis</em> quidem genae.</p>
-<h3 id="pixel-count">Pixel Count</h3>
-<p>Tilde photo booth wayfarers cliche lomo intelligentsia man braid kombucha vaporware farm-to-table mixtape portland. PBR&amp;B pickled cornhole ugh try-hard ethical subway tile. Fixie paleo intelligentsia pabst. Ennui waistcoat vinyl gochujang. Poutine salvia authentic affogato, chambray lumbersexual shabby chic.</p>
-<h3 id="contact-info">Contact Info</h3>
-<p>Plaid hell of cred microdosing, succulents tilde pour-over. Offal shabby chic 3 wolf moon blue bottle raw denim normcore poutine pork belly.</p>
-<h3 id="external-links">External Links</h3>
-<p>Stumptown PBR&amp;B keytar plaid street art, forage XOXO pitchfork selvage affogato green juice listicle pickled everyday carry hashtag. Organic sustainable letterpress sartorial scenester intelligentsia swag bushwick. Put a bird on it stumptown neutra locavore. IPhone typewriter messenger bag narwhal. Ennui cold-pressed seitan flannel keytar, single-origin coffee adaptogen occupy yuccie williamsburg chillwave shoreditch forage waistcoat.</p>
-<pre><code>This is the final element on the page and there should be no margin below this.
-</code></pre>
-</div>
-
-
-
-    
-	
-  
-
-    
-	
-  
-    
-    
-	
-    
-
-<div class="td-content" style="page-break-before: always">
-    
-	<h1 id="pg-8df6ea6904416b571ff9bc73afb50933">8 - Reference</h1>
-    <div class="lead">Low level reference docs for your project.</div>
-	
-
-<div class="pageinfo pageinfo-primary">
-<p>This is a placeholder page that shows you how to use this template site.</p>
-
-</div>
-
-<p>If your project has an API, configuration, or other reference - anything that users need to look up that’s at an even lower level than a single task - put (or link to it) here. You can serve and link to generated reference docs created using Doxygen,
-Javadoc, or other doc generation tools by putting them in your <code>static/</code> directory. Find out more in <a href="https://docsy.dev/docs/adding-content/content/#adding-static-content">Adding static content</a>. For OpenAPI reference, Docsy also provides a <a href="https://www.docsy.dev/docs/adding-content/shortcodes/#swaggerui">Swagger UI layout and shortcode</a> that renders <a href="https://swagger.io/tools/swagger-ui/">Swagger UI</a> using any OpenAPI YAML or JSON file as source.</p>
-
-</div>
-
-
-
-    
-      
-  
-  
-  
-  
-
-  
-  
-
-  
-    
-    
-	
-    
-
-<div class="td-content" style="page-break-before: always">
-    
-	<h1 id="pg-fae1ff8e3c30cfdbe85045f64e0a7b36">8.1 - Parameter Reference</h1>
-    <div class="lead">A short lead description about this content page. It can be <strong>bold</strong> or <em>italic</em> and can be split over multiple paragraphs.</div>
-	
-
-<div class="pageinfo pageinfo-primary">
-<p>This is a placeholder page. Replace it with your own content.</p>
-
-</div>
-
-<p>Text can be <strong>bold</strong>, <em>italic</em>, or <del>strikethrough</del>. <a href="https://gohugo.io">Links</a> should be blue with no underlines (unless hovered over).</p>
-<p>There should be whitespace between paragraphs. Vape migas chillwave sriracha poutine try-hard distillery. Tattooed shabby chic small batch, pabst art party heirloom letterpress air plant pop-up. Sustainable chia skateboard art party banjo cardigan normcore affogato vexillologist quinoa meggings man bun master cleanse shoreditch readymade. Yuccie prism four dollar toast tbh cardigan iPhone, tumblr listicle live-edge VHS. Pug lyft normcore hot chicken biodiesel, actually keffiyeh thundercats photo booth pour-over twee fam food truck microdosing banh mi. Vice activated charcoal raclette unicorn live-edge post-ironic. Heirloom vexillologist coloring book, beard deep v letterpress echo park humblebrag tilde.</p>
-<p>90&rsquo;s four loko seitan photo booth gochujang freegan tumeric listicle fam ugh humblebrag. Bespoke leggings gastropub, biodiesel brunch pug fashion axe meh swag art party neutra deep v chia. Enamel pin fanny pack knausgaard tofu, artisan cronut hammock meditation occupy master cleanse chartreuse lumbersexual. Kombucha kogi viral truffaut synth distillery single-origin coffee ugh slow-carb marfa selfies. Pitchfork schlitz semiotics fanny pack, ugh artisan vegan vaporware hexagon. Polaroid fixie post-ironic venmo wolf ramps <strong>kale chips</strong>.</p>
-<blockquote>
-<p>There should be no margin above this first sentence.</p>
-<p>Blockquotes should be a lighter gray with a border along the left side in the secondary color.</p>
-<p>There should be no margin below this final sentence.</p>
-</blockquote>
-<h2 id="first-header-2">First Header 2</h2>
-<p>This is a normal paragraph following a header. Knausgaard kale chips snackwave microdosing cronut copper mug swag synth bitters letterpress glossier <strong>craft beer</strong>. Mumblecore bushwick authentic gochujang vegan chambray meditation jean shorts irony. Viral farm-to-table kale chips, pork belly palo santo distillery activated charcoal aesthetic jianbing air plant woke lomo VHS organic. Tattooed locavore succulents heirloom, small batch sriracha echo park DIY af. Shaman you probably haven&rsquo;t heard of them copper mug, crucifix green juice vape <em>single-origin coffee</em> brunch actually. Mustache etsy vexillologist raclette authentic fam. Tousled beard humblebrag asymmetrical. I love turkey, I love my job, I love my friends, I love Chardonnay!</p>
-<p>Deae legum paulatimque terra, non vos mutata tacet: dic. Vocant docuique me plumas fila quin afuerunt copia haec o neque.</p>
-<p>On big screens, paragraphs and headings should not take up the full container width, but we want tables, code blocks and similar to take the full width.</p>
-<p>Scenester tumeric pickled, authentic crucifix post-ironic fam freegan VHS pork belly 8-bit yuccie PBR&amp;B. <strong>I love this life we live in</strong>.</p>
-<h2 id="second-header-2">Second Header 2</h2>
-<blockquote>
-<p>This is a blockquote following a header. Bacon ipsum dolor sit amet t-bone doner shank drumstick, pork belly porchetta chuck sausage brisket ham hock rump pig. Chuck kielbasa leberkas, pork bresaola ham hock filet mignon cow shoulder short ribs biltong.</p>
-</blockquote>
-<h3 id="header-3">Header 3</h3>
-<pre><code>This is a code block following a header.
-</code></pre><p>Next level leggings before they sold out, PBR&amp;B church-key shaman echo park. Kale chips occupy godard whatever pop-up freegan pork belly selfies. Gastropub Belinda subway tile woke post-ironic seitan. Shabby chic man bun semiotics vape, chia messenger bag plaid cardigan.</p>
-<h4 id="header-4">Header 4</h4>
-<ul>
-<li>This is an unordered list following a header.</li>
-<li>This is an unordered list following a header.</li>
-<li>This is an unordered list following a header.</li>
-</ul>
-<h5 id="header-5">Header 5</h5>
-<ol>
-<li>This is an ordered list following a header.</li>
-<li>This is an ordered list following a header.</li>
-<li>This is an ordered list following a header.</li>
-</ol>
-<h6 id="header-6">Header 6</h6>
-<table>
-<thead>
-<tr>
-<th>What</th>
-<th>Follows</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A table</td>
-<td>A header</td>
-</tr>
-<tr>
-<td>A table</td>
-<td>A header</td>
-</tr>
-<tr>
-<td>A table</td>
-<td>A header</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p>There&rsquo;s a horizontal rule above and below this.</p>
-<hr>
-<p>Here is an unordered list:</p>
-<ul>
-<li>Liverpool F.C.</li>
-<li>Chelsea F.C.</li>
-<li>Manchester United F.C.</li>
-</ul>
-<p>And an ordered list:</p>
-<ol>
-<li>Michael Brecker</li>
-<li>Seamus Blake</li>
-<li>Branford Marsalis</li>
-</ol>
-<p>And an unordered task list:</p>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> Create a Hugo theme</li>
-<li><input checked="" disabled="" type="checkbox"> Add task lists to it</li>
-<li><input disabled="" type="checkbox"> Take a vacation</li>
-</ul>
-<p>And a &ldquo;mixed&rdquo; task list:</p>
-<ul>
-<li><input disabled="" type="checkbox"> Pack bags</li>
-<li>?</li>
-<li><input disabled="" type="checkbox"> Travel!</li>
-</ul>
-<p>And a nested list:</p>
-<ul>
-<li>Jackson 5
-<ul>
-<li>Michael</li>
-<li>Tito</li>
-<li>Jackie</li>
-<li>Marlon</li>
-<li>Jermaine</li>
-</ul>
-</li>
-<li>TMNT
-<ul>
-<li>Leonardo</li>
-<li>Michelangelo</li>
-<li>Donatello</li>
-<li>Raphael</li>
-</ul>
-</li>
-</ul>
-<p>Definition lists can be used with Markdown syntax. Definition headers are bold.</p>
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-<hr>
-<p>Tables should have bold headings and alternating shaded rows.</p>
-<table>
-<thead>
-<tr>
-<th>Artist</th>
-<th>Album</th>
-<th>Year</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Michael Jackson</td>
-<td>Thriller</td>
-<td>1982</td>
-</tr>
-<tr>
-<td>Prince</td>
-<td>Purple Rain</td>
-<td>1984</td>
-</tr>
-<tr>
-<td>Beastie Boys</td>
-<td>License to Ill</td>
-<td>1986</td>
-</tr>
-</tbody>
-</table>
-<p>If a table is too wide, it should scroll horizontally.</p>
-<table>
-<thead>
-<tr>
-<th>Artist</th>
-<th>Album</th>
-<th>Year</th>
-<th>Label</th>
-<th>Awards</th>
-<th>Songs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Michael Jackson</td>
-<td>Thriller</td>
-<td>1982</td>
-<td>Epic Records</td>
-<td>Grammy Award for Album of the Year, American Music Award for Favorite Pop/Rock Album, American Music Award for Favorite Soul/R&amp;B Album, Brit Award for Best Selling Album, Grammy Award for Best Engineered Album, Non-Classical</td>
-<td>Wanna Be Startin' Somethin', Baby Be Mine, The Girl Is Mine, Thriller, Beat It, Billie Jean, Human Nature, P.Y.T. (Pretty Young Thing), The Lady in My Life</td>
-</tr>
-<tr>
-<td>Prince</td>
-<td>Purple Rain</td>
-<td>1984</td>
-<td>Warner Brothers Records</td>
-<td>Grammy Award for Best Score Soundtrack for Visual Media, American Music Award for Favorite Pop/Rock Album, American Music Award for Favorite Soul/R&amp;B Album, Brit Award for Best Soundtrack/Cast Recording, Grammy Award for Best Rock Performance by a Duo or Group with Vocal</td>
-<td>Let&rsquo;s Go Crazy, Take Me With U, The Beautiful Ones, Computer Blue, Darling Nikki, When Doves Cry, I Would Die 4 U, Baby I&rsquo;m a Star, Purple Rain</td>
-</tr>
-<tr>
-<td>Beastie Boys</td>
-<td>License to Ill</td>
-<td>1986</td>
-<td>Mercury Records</td>
-<td>noawardsbutthistablecelliswide</td>
-<td>Rhymin &amp; Stealin, The New Style, She&rsquo;s Crafty, Posse in Effect, Slow Ride, Girls, (You Gotta) Fight for Your Right, No Sleep Till Brooklyn, Paul Revere, Hold It Now, Hit It, Brass Monkey, Slow and Low, Time to Get Ill</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p>Code snippets like <code>var foo = &quot;bar&quot;;</code> can be shown inline.</p>
-<p>Also, <code>this should vertically align</code> <del><code>with this</code></del> <del>and this</del>.</p>
-<p>Code can also be shown in a block element.</p>
-<pre><code>foo := &quot;bar&quot;;
-bar := &quot;foo&quot;;
-</code></pre><p>Code can also use syntax highlighting.</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#204a87;font-weight:bold">func</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
-  <span style="color:#000">input</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#4e9a06">`var foo = &#34;bar&#34;;`</span>
-
-  <span style="color:#000">lexer</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">lexers</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Get</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;javascript&#34;</span><span style="color:#000;font-weight:bold">)</span>
-  <span style="color:#000">iterator</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">_</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">lexer</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Tokenise</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">nil</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">input</span><span style="color:#000;font-weight:bold">)</span>
-  <span style="color:#000">style</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">styles</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Get</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;github&#34;</span><span style="color:#000;font-weight:bold">)</span>
-  <span style="color:#000">formatter</span> <span style="color:#ce5c00;font-weight:bold">:=</span> <span style="color:#000">html</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">New</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">html</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">WithLineNumbers</span><span style="color:#000;font-weight:bold">())</span>
-
-  <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">buff</span> <span style="color:#000">bytes</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Buffer</span>
-  <span style="color:#000">formatter</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Format</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">buff</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">style</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">iterator</span><span style="color:#000;font-weight:bold">)</span>
-
-  <span style="color:#000">fmt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Println</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">buff</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">String</span><span style="color:#000;font-weight:bold">())</span>
-<span style="color:#000;font-weight:bold">}</span>
-</code></pre></div><pre><code>Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-</code></pre><p>Inline code inside table cells should still be distinguishable.</p>
-<table>
-<thead>
-<tr>
-<th>Language</th>
-<th>Code</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Javascript</td>
-<td><code>var foo = &quot;bar&quot;;</code></td>
-</tr>
-<tr>
-<td>Ruby</td>
-<td><code>foo = &quot;bar&quot;{</code></td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p>Small images should be shown at their actual size.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Picea_abies_shoot_with_buds%2C_Sogndal%2C_Norway.jpg/240px-Picea_abies_shoot_with_buds%2C_Sogndal%2C_Norway.jpg" alt=""></p>
-<p>Large images should always scale down and fit in the content container.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Picea_abies_shoot_with_buds%2C_Sogndal%2C_Norway.jpg/1024px-Picea_abies_shoot_with_buds%2C_Sogndal%2C_Norway.jpg" alt=""></p>
-<p><em>The photo above of the Spruce Picea abies shoot with foliage buds: Bjørn Erik Pedersen, CC-BY-SA.</em></p>
-<h2 id="components">Components</h2>
-<h3 id="alerts">Alerts</h3>
-<p>
-
-<div class="alert alert-primary" role="alert">
-
-
-    This is an alert.
-
-</div>
-
-
-
-<div class="alert alert-primary" role="alert">
-<h4 class="alert-heading">Note</h4>
-
-    This is an alert with a title.
-
-</div>
-
-
-
-<div class="alert alert-primary" role="alert">
-<h4 class="alert-heading">Note</h4>
-
-    This is an alert with a title and <strong>Markdown</strong>.
-
-</div>
-
-
-
-<div class="alert alert-success" role="alert">
-
-
-    This is a successful alert.
-
-</div>
-
-
-
-<div class="alert alert-warning" role="alert">
-
-
-    This is a warning.
-
-</div>
-
-
-
-<div class="alert alert-warning" role="alert">
-<h4 class="alert-heading">Warning</h4>
-
-    This is a warning with a title.
-
-</div>
-</p>
-<h2 id="another-heading">Another Heading</h2>
-
-</div>
-
-
-
-    
-	
-  
-
-    
-	
-  
-    
-    
-	
-    
-
-<div class="td-content" style="page-break-before: always">
-    
-	<h1 id="pg-8efbf7499fe9c7bde8d2c1bb7ff6ee3c">9 - Contribution Guidelines</h1>
+	<h1 id="pg-8efbf7499fe9c7bde8d2c1bb7ff6ee3c">8 - Contribution Guidelines</h1>
     <div class="lead">How to contribute to the docs</div>
 	
 
