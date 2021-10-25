@@ -26,7 +26,9 @@ This document will focus on the C implementation of Avro. To learn more about Av
  / ___ | |/ / /  / /_/ /  / /___
 /_/  |_|___/_/   \____/   \____/
 ```
-<cite>A C program is like a fast dance on a newly waxed dance floor by people carrying razors.</cite> — Waldi Ravens
+> 
+> A C program is like a fast dance on a newly waxed dance floor by people carrying razors. — Waldi Ravens
+>
 
 The C implementation has been tested on MacOSX and Linux but, over time, the number of support OSes should grow. Please let us know if you’re using `Avro C` on other systems.
 

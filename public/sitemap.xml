@@ -3,28 +3,8 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/docs/overview/</loc>
-    <lastmod>2021-10-22T13:45:53+03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/docs/tasks/beds/</loc>
-    <lastmod>2021-10-22T13:45:53+03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/docs/tasks/ponycopters/configuring-ponycopters/</loc>
-    <lastmod>2021-10-22T13:45:53+03:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/docs/getting-started-java/</loc>
     <lastmod>2021-10-25T10:47:12+03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/docs/tasks/ponycopters/launching-ponycopters/</loc>
-    <lastmod>2021-10-22T13:45:53+03:00</lastmod>
   </url>
   
   <url>
@@ -43,17 +23,8 @@
   </url>
   
   <url>
-    <loc>/docs/tasks/porridge/</loc>
-    <lastmod>2021-10-22T13:45:53+03:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/docs/java-api/</loc>
-  </url>
-  
-  <url>
-    <loc>/docs/tasks/task/</loc>
-    <lastmod>2021-10-22T13:45:53+03:00</lastmod>
+    <lastmod>2021-10-25T16:29:35+03:00</lastmod>
   </url>
   
   <url>
@@ -63,11 +34,11 @@
   
   <url>
     <loc>/docs/c-api/</loc>
+    <lastmod>2021-10-25T16:29:35+03:00</lastmod>
   </url>
   
   <url>
-    <loc>/docs/tasks/</loc>
-    <lastmod>2021-10-22T13:45:53+03:00</lastmod>
+    <loc>/docs/mapreduce-guide/</loc>
   </url>
   
   <url>
@@ -117,11 +88,6 @@
   
   <url>
     <loc>/docs/reference/parameter-reference/</loc>
-    <lastmod>2021-10-22T13:45:53+03:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/docs/tasks/ponycopters/</loc>
     <lastmod>2021-10-22T13:45:53+03:00</lastmod>
   </url>
   
