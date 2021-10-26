@@ -29,7 +29,7 @@ This document defines Apache Avro. It is intended to be the authoritative specif
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/docs/specification/" />
-<meta property="og:updated_time" content="2021-10-25T16:00:47+03:00" /><meta property="og:site_name" content="Apache Avro" />
+<meta property="og:updated_time" content="2021-10-26T22:36:45+03:00" /><meta property="og:site_name" content="Apache Avro" />
 <meta itemprop="name" content="Specification">
 <meta itemprop="description" content="">
 <meta name="twitter:card" content="summary"/>
@@ -216,18 +216,14 @@ Primitive types have no specified attributes.</li>
 <li><em>aliases</em>: a JSON array of strings, providing alternate names for this record (optional).</li>
 <li><em>fields</em>: a JSON array, listing fields (required). Each field is a JSON object with the following attributes:
 <ul>
-<li>
-<p><em>name</em>: a JSON string providing the name of the field (required), and</p>
+<li><em>name</em>: a JSON string providing the name of the field (required), and</li>
+<li><em>doc</em>: a JSON string describing this field for users (optional).</li>
+<li><em>type</em>: a schema, as defined above</li>
+<li><em>default</em>: A default value for this field, only used when reading instances that lack the field for schema evolution purposes. The presence of a default value does not make the field optional at encoding time. Permitted values depend on the field&rsquo;s schema type, according to the table below. Default values for union fields correspond to the first schema in the union. Default values for bytes and fixed fields are JSON strings, where Unicode code points 0-255 are mapped to unsigned 8-bit byte values 0-255. Avro encodes a field even if its value is equal to its default.</li>
+</ul>
 </li>
-<li>
-<p><em>doc</em>: a JSON string describing this field for users (optional).</p>
-</li>
-<li>
-<p><em>type</em>: a schema, as defined above</p>
-</li>
-<li>
-<p><em>default</em>: A default value for this field, only used when reading instances that lack the field for schema evolution purposes. The presence of a default value does not make the field optional at encoding time. Permitted values depend on the field&rsquo;s schema type, according to the table below. Default values for union fields correspond to the first schema in the union. Default values for bytes and fixed fields are JSON strings, where Unicode code points 0-255 are mapped to unsigned 8-bit byte values 0-255. Avro encodes a field even if its value is equal to its default.</p>
-<h2 id="field-default-values"><em>field default values</em></h2>
+</ul>
+<p><em>field default values</em></p>
 <table>
 <thead>
 <tr>
@@ -294,16 +290,9 @@ Primitive types have no specified attributes.</li>
 </tr>
 </tbody>
 </table>
-<hr>
-</li>
-<li>
-<p>order: specifies how this field impacts sort ordering of this record (optional). Valid values are &ldquo;ascending&rdquo; (the default), &ldquo;descending&rdquo;, or &ldquo;ignore&rdquo;. For more details on how this is used, see the sort order section below.</p>
-</li>
-<li>
-<p>aliases: a JSON array of strings, providing alternate names for this field (optional).</p>
-</li>
-</ul>
-</li>
+<ul>
+<li>order: specifies how this field impacts sort ordering of this record (optional). Valid values are &ldquo;ascending&rdquo; (the default), &ldquo;descending&rdquo;, or &ldquo;ignore&rdquo;. For more details on how this is used, see the sort order section below.</li>
+<li>aliases: a JSON array of strings, providing alternate names for this field (optional).</li>
 </ul>
 <p>For example, a linked-list of 64-bit values may be defined with:</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#000;font-weight:bold">{</span>
@@ -407,7 +396,6 @@ Primitive types have no specified attributes.</li>
 <li>a <em>boolean</em> is written as a single byte whose value is either 0 (false) or 1 (true).</li>
 <li><em>int</em> and <em>long</em> values are written using variable-length zig-zag coding. Some examples:</li>
 </ul>
-<hr>
 <table>
 <thead>
 <tr>
@@ -454,7 +442,6 @@ Primitive types have no specified attributes.</li>
 </tr>
 </tbody>
 </table>
-<hr>
 <ul>
 <li>a <em>float</em> is written as 4 bytes. The float is converted into a 32-bit integer using a method equivalent to Java&rsquo;s <a href="https://docs.oracle.com/javase/6/docs/api/java/lang/Float.html#floatToIntBits%28float%29">floatToIntBits</a> and then encoded in little-endian format.</li>
 <li>a <em>double</em> is written as 8 bytes. The double is converted into a 64-bit integer using a method equivalent to Java&rsquo;s <a href="https://docs.oracle.com/javase/6/docs/api/java/lang/Double.html#doubleToLongBits%28double%29">doubleToLongBits</a> and then encoded in little-endian format.</li>
