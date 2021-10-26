@@ -284,14 +284,14 @@ an array containing the items 3 and 27 could be encoded as the long value 2 (enc
 The blocked representation permits one to read and write arrays larger than can be buffered in memory, since one can start writing items without knowing the full length of the array.
 
 #### Maps
-Maps are encoded as a series of _blocks_. Each block consists of a <code>long</code> _count_ value, followed by that many key/value pairs. A block with count zero indicates the end of the map. Each item is encoded per the map's value schema.
+Maps are encoded as a series of _blocks_. Each block consists of a `long` _count_ value, followed by that many key/value pairs. A block with count zero indicates the end of the map. Each item is encoded per the map's value schema.
 
-If a block's count is negative, its absolute value is used, and the count is followed immediately by a <code>long</code> block size indicating the number of bytes in the block. This block size permits fast skipping through data, e.g., when projecting a record to a subset of its fields.
+If a block's count is negative, its absolute value is used, and the count is followed immediately by a `long` block size indicating the number of bytes in the block. This block size permits fast skipping through data, e.g., when projecting a record to a subset of its fields.
 
 The blocked representation permits one to read and write maps larger than can be buffered in memory, since one can start writing items without knowing the full length of the map.
 
 #### Unions
-A union is encoded by first writing an <code>int</code> value indicating the zero-based position within the union of the schema of its value. The value is then encoded per the indicated schema within the union.
+A union is encoded by first writing an `int` value indicating the zero-based position within the union of the schema of its value. The value is then encoded per the indicated schema within the union.
 
 For example, the union schema ["null","string"] would encode:
 
@@ -552,12 +552,12 @@ The handshake process uses the following record schemas:
 }
 ```
         
-* A client first prefixes each request with a <code>HandshakeRequest</code> containing just the hash of its protocol and of the server's protocol (<code>clientHash!=null, clientProtocol=null, serverHash!=null</code>), where the hashes are 128-bit MD5 hashes of the JSON protocol text. If a client has never connected to a given server, it sends its hash as a guess of the server's hash, otherwise it sends the hash that it previously obtained from this server.
+* A client first prefixes each request with a `HandshakeRequest` containing just the hash of its protocol and of the server's protocol (`clientHash!=null, clientProtocol=null, serverHash!=null`), where the hashes are 128-bit MD5 hashes of the JSON protocol text. If a client has never connected to a given server, it sends its hash as a guess of the server's hash, otherwise it sends the hash that it previously obtained from this server.
 The server responds with a HandshakeResponse containing one of:
-  * <code>match=BOTH, serverProtocol=null, serverHash=null</code> if the client sent the valid hash of the server's protocol and the server knows what protocol corresponds to the client's hash. In this case, the request is complete and the response data immediately follows the HandshakeResponse.
-  * <code>match=CLIENT, serverProtocol!=null, serverHash!=null</code> if the server has previously seen the client's protocol, but the client sent an incorrect hash of the server's protocol. The request is complete and the response data immediately follows the HandshakeResponse. The client must use the returned protocol to process the response and should also cache that protocol and its hash for future interactions with this server.
-  * <code>match=NONE</code> if the server has not previously seen the client's protocol. The serverHash and serverProtocol may also be non-null if the server's protocol hash was incorrect.
-In this case the client must then re-submit its request with its protocol text (<code>clientHash!=null, clientProtocol!=null, serverHash!=null</code>) and the server should respond with a successful match (match=BOTH, serverProtocol=null, serverHash=null) as above.
+  * `match=BOTH, serverProtocol=null, serverHash=null` if the client sent the valid hash of the server's protocol and the server knows what protocol corresponds to the client's hash. In this case, the request is complete and the response data immediately follows the HandshakeResponse.
+  * `match=CLIENT, serverProtocol!=null, serverHash!=null` if the server has previously seen the client's protocol, but the client sent an incorrect hash of the server's protocol. The request is complete and the response data immediately follows the HandshakeResponse. The client must use the returned protocol to process the response and should also cache that protocol and its hash for future interactions with this server.
+  * `match=NONE` if the server has not previously seen the client's protocol. The serverHash and serverProtocol may also be non-null if the server's protocol hash was incorrect.
+In this case the client must then re-submit its request with its protocol text (`clientHash!=null, clientProtocol!=null, serverHash!=null`) and the server should respond with a successful match (match=BOTH, serverProtocol=null, serverHash=null) as above.
 
 The meta field is reserved for future handshake enhancements.
 
