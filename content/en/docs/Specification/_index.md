@@ -54,22 +54,20 @@ Records use the type name "record" and support three attributes:
   * _type_: a schema, as defined above
   * _default_: A default value for this field, only used when reading instances that lack the field for schema evolution purposes. The presence of a default value does not make the field optional at encoding time. Permitted values depend on the field's schema type, according to the table below. Default values for union fields correspond to the first schema in the union. Default values for bytes and fixed fields are JSON strings, where Unicode code points 0-255 are mapped to unsigned 8-bit byte values 0-255. Avro encodes a field even if its value is equal to its default.
 
-      *field default values*
-      ---------------------------
-      | **avro type** |	**json type** |	**example** |
-      |---|---|---:|
-      | null | 	null |	null |
-      | boolean |	boolean |	true |
-      | int,long | integer | 1 |
-      | float,double | number | 1.1 |
-      | bytes	| string | "\u00FF" |
-      | string | string | "foo" |
-      | record | object | {"a": 1} |
-      | enum | string | "FOO" |
-      | array | array | [1] |
-      | map | object | {"a": 1} |
-      | fixed	| string | "\u00ff" |
-      ----------------------------
+*field default values*
+| **avro type** |	**json type** |	**example** |
+|---|---|---:|
+| null | 	null |	null |
+| boolean |	boolean |	true |
+| int,long | integer | 1 |
+| float,double | number | 1.1 |
+| bytes	| string | "\u00FF" |
+| string | string | "foo" |
+| record | object | {"a": 1} |
+| enum | string | "FOO" |
+| array | array | [1] |
+| map | object | {"a": 1} |
+| fixed	| string | "\u00ff" |
 
   * order: specifies how this field impacts sort ordering of this record (optional). Valid values are "ascending" (the default), "descending", or "ignore". For more details on how this is used, see the sort order section below.
   * aliases: a JSON array of strings, providing alternate names for this field (optional).
