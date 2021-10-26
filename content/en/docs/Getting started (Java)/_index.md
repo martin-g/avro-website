@@ -4,13 +4,14 @@ tags: ["java"]
 title: "Getting Started (Java)"
 linkTitle: "Getting Started (Java)"
 weight: 2
+avroversion: 3
 ---
 
 This is a short guide for getting started with Apache Avro™ using Java. This guide only covers using Avro for data serialization; see Patrick Hunt's [Avro RPC Quick Start](https://github.com/phunt/avro-rpc-quickstart) for a good introduction to using Avro for RPC.
 
 ## Download
 
-Avro implementations for C, C++, C#, Java, PHP, Python, and Ruby can be downloaded from the [Apache Avro™ Releases](https://avro.apache.org/releases.html) page. This guide uses Avro 1.10.2, the latest version at the time of writing. For the examples in this guide, download avro-1.10.2.jar and avro-tools-1.10.2.jar.
+Avro implementations for C, C++, C#, Java, PHP, Python, and Ruby can be downloaded from the [Apache Avro™ Releases](https://avro.apache.org/releases.html) page. This guide uses Avro {{< avro_version >}}, the latest version at the time of writing. For the examples in this guide, download avro-{{< avro_version >}}.jar and avro-tools-{{< avro_version >}}.jar.
 
 Alternatively, if you are using Maven, add the following dependency to your POM:
 
@@ -18,7 +19,7 @@ Alternatively, if you are using Maven, add the following dependency to your POM:
 <dependency>
   <groupId>org.apache.avro</groupId>
   <artifactId>avro</artifactId>
-  <version>1.10.2</version>
+  <version>{{< avro_version >}}</version>
 </dependency>
 ```
 
@@ -28,7 +29,7 @@ As well as the Avro Maven plugin (for performing code generation):
 <plugin>
   <groupId>org.apache.avro</groupId>
   <artifactId>avro-maven-plugin</artifactId>
-  <version>1.10.2</version>
+  <version>{{< avro_version >}}</version>
   <executions>
     <execution>
       <phase>generate-sources</phase>
@@ -80,13 +81,13 @@ Fields are defined via an array of objects, each of which defines a name and typ
 Code generation allows us to automatically create classes based on our previously-defined schema. Once we have defined the relevant classes, there is no need to use the schema directly in our programs. We use the avro-tools jar to generate code as follows:
 
 ```shell
-java -jar /path/to/avro-tools-1.10.2.jar compile schema <schema file> <destination>
+java -jar /path/to/avro-tools-{{< avro_version >}}.jar compile schema <schema file> <destination>
 ```
 
 This will generate the appropriate source files in a package based on the schema's namespace in the provided destination folder. For instance, to generate a User class in package example.avro from the schema defined above, run
 
 ```shell
-java -jar /path/to/avro-tools-1.10.2.jar compile schema user.avsc .
+java -jar /path/to/avro-tools-{{< avro_version >}}.jar compile schema user.avsc .
 ```
 
 Note that if you using the Avro Maven plugin, there is no need to manually invoke the schema compiler; the plugin automatically performs code generation on any .avsc files present in the configured source directory.
@@ -173,7 +174,7 @@ $ mvn -q exec:java -Dexec.mainClass=example.SpecificMain
 ```
 
 ### Beta feature: Generating faster code
-In 1.10.2 release we have introduced a new approach to generating code that speeds up decoding of objects by more than 10% and encoding by more than 30% (future performance enhancements are underway). To ensure a smooth introduction of this change into production systems, this feature is controlled by a feature flag, the system property org.apache.avro.specific.use_custom_coders. In this first release, this feature is off by default. To turn it on, set the system flag to true at runtime. In the sample above, for example, you could enable the fater coders as follows:
+In {{< avro_version >}} release we have introduced a new approach to generating code that speeds up decoding of objects by more than 10% and encoding by more than 30% (future performance enhancements are underway). To ensure a smooth introduction of this change into production systems, this feature is controlled by a feature flag, the system property org.apache.avro.specific.use_custom_coders. In this first release, this feature is off by default. To turn it on, set the system flag to true at runtime. In the sample above, for example, you could enable the fater coders as follows:
 
 $ mvn -q exec:java -Dexec.mainClass=example.SpecificMain \
     -Dorg.apache.avro.specific.use_custom_coders=true

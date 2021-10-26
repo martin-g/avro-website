@@ -4,7 +4,7 @@ linkTitle: "C API"
 weight: 5
 ---
 
-The current version of Avro is 1.10.2. The current version of `libavro` is `23:0:0`. This document was created 2021-10-21.
+The current version of Avro is {{< avro_version >}}. The current version of `libavro` is `23:0:0`. This document was created 2021-10-21.
 
 ## 1. Introduction to Avro
 Avro is a data serialization system.
