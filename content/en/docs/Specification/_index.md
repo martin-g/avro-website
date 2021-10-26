@@ -210,7 +210,6 @@ Primitive types are encoded in binary as follows:
 * a _boolean_ is written as a single byte whose value is either 0 (false) or 1 (true).
 * _int_ and _long_ values are written using variable-length zig-zag coding. Some examples:
 
------------
 | *value* | *hex* |
 |---|---|
 | 0 | 00 |
@@ -222,7 +221,7 @@ Primitive types are encoded in binary as follows:
 |-64 | 7f |
 |64 | 80 01|
 |...|...|
------------
+
 * a _float_ is written as 4 bytes. The float is converted into a 32-bit integer using a method equivalent to Java's [floatToIntBits](https://docs.oracle.com/javase/6/docs/api/java/lang/Float.html#floatToIntBits%28float%29) and then encoded in little-endian format.
 * a _double_ is written as 8 bytes. The double is converted into a 64-bit integer using a method equivalent to Java's [doubleToLongBits](https://docs.oracle.com/javase/6/docs/api/java/lang/Double.html#doubleToLongBits%28double%29) and then encoded in little-endian format.
 * _bytes_ are encoded as a long followed by that many bytes of data.
