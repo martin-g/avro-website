@@ -7,3 +7,5 @@ menu:
   main:
     weight: 1
 ---
+
+Apache Avro project is a member of the Apache Software Foundation!
