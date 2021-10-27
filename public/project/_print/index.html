@@ -139,7 +139,7 @@
   aria-label="Search this site…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.bd73fd0b0f5019f1baeb6b42065af970.json"
+  data-offline-search-index-json-src="/offline-search-index.3cd8e2b3df1e7180bd6396fa666240f2.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -148,12 +148,347 @@
 </nav>
 
     </header>
-    <div class="container-fluid td-default td-outer">
-      <main role="main" class="td-main">
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+          </div>
+          <div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+          </div>
+          <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+            
+
+
+
+
+<div class="td-content">
+<div class="pageinfo pageinfo-primary d-print-none">
+<p>
+This the multi-page printable view of this section.
+<a href="#" onclick="print();return false;">Click here to print</a>.
+</p><p>
+<a href="/project/">Return to the regular view of this page</a>.
+</p>
+</div>
+
+
+
+<h1 class="title">Project</h1>
+
+
+
+
+
+    <ul>
+    
+  
+  
+  
+  
+
+  
+    
+    
+	
+<li>1: <a href="#pg-012e680f6242537b069eff18d686a674">Download</a></li>
+
+
+    
+    <ul>
         
+  
+  
+  
+  
+
+  
+
+    </ul>
+    
+  
+    
+    
+	
+<li>2: <a href="#pg-b08f161257be4031dd69d279dafb245d">Credits</a></li>
 
 
-      </main>
+    
+    <ul>
+        
+  
+  
+  
+  
+
+  
+
+    </ul>
+    
+  
+
+    </ul>
+
+
+<div class="content">
+      
+</div>
+</div>
+
+
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+<div class="td-content" style="">
+    
+	<h1 id="pg-012e680f6242537b069eff18d686a674">1 - Download</h1>
+    
+	<h2 id="download">Download</h2>
+<p>Releases may be downloaded from Apache mirrors: <a href="https://www.apache.org/dyn/closer.cgi/avro/">Download</a></p>
+<p>The latest release is: Avro 1.10.2 (3.4M, source, <a href="https://downloads.apache.org/avro/avro-1.10.2/avro-src-1.10.2.tar.gz.asc">pgp</a>, <a href="https://downloads.apache.org/avro/avro-1.10.2/avro-src-1.10.2.tar.gz.sha512">sha512</a>)</p>
+<h2 id="release-notes">Release Notes</h2>
+<p>Release notes for Avro releases are available in <a href="https://issues.apache.org/jira/browse/AVRO?report=com.atlassian.jira.plugin.system.project:changelog-panel#selectedTab=com.atlassian.jira.plugin.system.project%3Achangelog-panel">Jira</a></p>
+<p>##Verifying a release
+It is essential that you verify the integrity of the downloaded files using the PGP signatures or SHA512 checksums. Please read <a href="https://www.apache.org/info/verification.html">How to verify downloaded</a> files for more information on why you should verify our releases.</p>
+<p>The PGP signatures can be verified using PGP or GPG. First download the <a href="https://downloads.apache.org/avro/KEYS">KEYS</a> file as well as the .asc signature files for the relevant release packages. Make sure you get these files from the main distribution directory, rather than from a mirror. Then verify the signatures using:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">% gpg --import KEYS
+% gpg --verify downloaded_file.asc downloaded_file
+</code></pre></div><p>or</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">% pgpk -a KEYS
+% pgpv downloaded_file.asc
+</code></pre></div><p>or</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">% pgp -ka KEYS
+% pgp downloaded_file.asc
+</code></pre></div><p>Alternatively, you can verify the hash on the file.</p>
+<p>Hashes can be calculated using GPG:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">% gpg --print-md SHA256 downloaded_file
+</code></pre></div><p>The output should be compared with the contents of the SHA256 file. Similarly for other hashes (SHA512, SHA1, MD5 etc) which may be provided.</p>
+<p>Windows 7 and later systems should all now have certUtil:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">% certUtil -hashfile pathToFileToCheck
+</code></pre></div><p>HashAlgorithm choices: <em>MD2 MD4 MD5 SHA1 SHA256 SHA384 SHA512</em></p>
+<p>Unix-like systems (and macOS) will have a utility called <em>md5</em>, <em>md5sum</em> or <em>shasum</em>.</p>
+
+</div>
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-b08f161257be4031dd69d279dafb245d">2 - Credits</h1>
+    
+	<h2 id="apache-avro-credits">Apache Avro credits</h2>
+<h3 id="committers">Committers</h3>
+<p>Apache Avro&rsquo;s active committers are:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>username</strong></th>
+<th style="text-align:left"><strong>name</strong></th>
+<th style="text-align:left"><strong>organization</strong></th>
+<th style="text-align:center"><strong>roles</strong></th>
+<th style="text-align:center"><strong>timezone</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">blue</td>
+<td style="text-align:left">Ryan Blue</td>
+<td style="text-align:left">Netflix</td>
+<td style="text-align:center">spec, java, ruby</td>
+<td style="text-align:center">-8</td>
+</tr>
+<tr>
+<td style="text-align:left">brucem</td>
+<td style="text-align:left">Bruce Mitchener</td>
+<td style="text-align:left">Army of Bruce</td>
+<td style="text-align:center">c</td>
+<td style="text-align:center">+7</td>
+</tr>
+<tr>
+<td style="text-align:left">busbey</td>
+<td style="text-align:left">Sean Busbey</td>
+<td style="text-align:left">Cloudera</td>
+<td style="text-align:center">java, ruby</td>
+<td style="text-align:center">-6</td>
+</tr>
+<tr>
+<td style="text-align:left">cutting</td>
+<td style="text-align:left">Doug Cutting</td>
+<td style="text-align:left">Cloudera</td>
+<td style="text-align:center">spec, java</td>
+<td style="text-align:center">-8</td>
+</tr>
+<tr>
+<td style="text-align:left">dcreager</td>
+<td style="text-align:left">Douglas Creager</td>
+<td style="text-align:left">RedJack, LLC</td>
+<td style="text-align:center">c</td>
+<td style="text-align:center">-5</td>
+</tr>
+<tr>
+<td style="text-align:left">hammer</td>
+<td style="text-align:left">Jeff Hammerbacher</td>
+<td style="text-align:left">Cloudera</td>
+<td style="text-align:center">python</td>
+<td style="text-align:center">-8</td>
+</tr>
+<tr>
+<td style="text-align:left">iemejia</td>
+<td style="text-align:left">Ismaël Mejía</td>
+<td style="text-align:left">Talend</td>
+<td style="text-align:center">java, docker</td>
+<td style="text-align:center">+1</td>
+</tr>
+<tr>
+<td style="text-align:left">kojiromike</td>
+<td style="text-align:left">Michael A. Smith</td>
+<td style="text-align:left">Independent</td>
+<td style="text-align:center">python, docker</td>
+<td style="text-align:center">-5</td>
+</tr>
+<tr>
+<td style="text-align:left">massie</td>
+<td style="text-align:left">Matt Massie</td>
+<td style="text-align:left">UC Berkeley</td>
+<td style="text-align:center">c</td>
+<td style="text-align:center">-8</td>
+</tr>
+<tr>
+<td style="text-align:left">martinkl</td>
+<td style="text-align:left">Martin Kleppmann</td>
+<td style="text-align:left">University of Cambridge</td>
+<td style="text-align:center">c, ruby</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:left">nielsbasjes</td>
+<td style="text-align:left">Niels Basjes</td>
+<td style="text-align:left">Bol.com</td>
+<td style="text-align:center">java, docker</td>
+<td style="text-align:center">+1</td>
+</tr>
+<tr>
+<td style="text-align:left">philz</td>
+<td style="text-align:left">Philip Zeyliger</td>
+<td style="text-align:left">Cloudera</td>
+<td style="text-align:center">java</td>
+<td style="text-align:center">-8</td>
+</tr>
+<tr>
+<td style="text-align:left">rskraba</td>
+<td style="text-align:left">Ryan Skraba</td>
+<td style="text-align:left">Talend</td>
+<td style="text-align:center">java, docker</td>
+<td style="text-align:center">+1</td>
+</tr>
+<tr>
+<td style="text-align:left">sbanacho</td>
+<td style="text-align:left">Scott Banachowski</td>
+<td style="text-align:left">Microsoft</td>
+<td style="text-align:center">c++</td>
+<td style="text-align:center">-8</td>
+</tr>
+<tr>
+<td style="text-align:left">scottcarey</td>
+<td style="text-align:left">Scott Carey</td>
+<td style="text-align:left">RichRelevance</td>
+<td style="text-align:center">java</td>
+<td style="text-align:center">-8</td>
+</tr>
+<tr>
+<td style="text-align:left">sekikn</td>
+<td style="text-align:left">Kengo Seki</td>
+<td style="text-align:left">NTT Data</td>
+<td style="text-align:center">perl, interoperability</td>
+<td style="text-align:center">+9</td>
+</tr>
+<tr>
+<td style="text-align:left">sharadag</td>
+<td style="text-align:left">Sharad Agarwal</td>
+<td style="text-align:left">InMobi</td>
+<td style="text-align:center">python</td>
+<td style="text-align:center">+5.5</td>
+</tr>
+<tr>
+<td style="text-align:left">thiru</td>
+<td style="text-align:left">Thiruvalluvan M. G.</td>
+<td style="text-align:left">VertiCloud</td>
+<td style="text-align:center">java</td>
+<td style="text-align:center">+5.5</td>
+</tr>
+<tr>
+<td style="text-align:left">tomwhite</td>
+<td style="text-align:left">Tom White</td>
+<td style="text-align:left">Cloudera</td>
+<td style="text-align:center">java</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="contributors">Contributors</h3>
+<p>A list of Avro contributors and their contributions is available from <a href="http://s.apache.org/AvroFixed">Jira</a></p>
+<h3 id="emeriti">Emeriti</h3>
+<p>Contributors who are no longer active on Avro are:</p>
+<ul>
+<li>None</li>
+</ul>
+
+</div>
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+
+    
+	
+  
+
+
+
+          </main>
+        </div>
+      </div>
       
 <footer class="bg-dark py-5 row d-print-none">
   <div class="container-fluid mx-sm-5">

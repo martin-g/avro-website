@@ -1,7 +1,7 @@
 ---
 title: "Credits"
 linkTitle: "Credits"
-weight: 1
+weight: 2
 ---
 
 ## Apache Avro credits

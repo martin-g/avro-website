@@ -1,9 +1,9 @@
-
 ---
 title: "Project"
 linkTitle: "Project"
-weight: 15
+weight: 1
+layout: project
 menu:
   main:
-    weight: 15
+    weight: 1
 ---
