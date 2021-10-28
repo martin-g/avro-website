@@ -1,32 +1,15 @@
-# Docsy Example
+# Apache Avro website
 
-[Docsy](https://github.com/google/docsy) is a Hugo theme for technical documentation sites, providing easy site navigation, structure, and more. This **Docsy Example Project** uses the Docsy theme, as well as providing a skeleton documentation structure for you to use. You can either copy this project and edit it with your own content, or use the theme in your projects like any other [Hugo theme](https://gohugo.io/themes/installing-and-using-themes/).
+This is a repository of Apache Avro website. The repository of Apache Avro can be found [here](https://github.com/apache/avro).
 
-The theme is included in this project as a Git submodule:
+This website is base on [Hugo](https://gohugo.io) and uses [Docsy](https://www.docsy.dev/) theme.
 
-```bash
-▶ git submodule
- a053131a4ebf6a59e4e8834a42368e248d98c01d themes/docsy (heads/master)
-```
+## Getting started
 
-This Docsy Example Project is hosted at [https://example.docsy.dev/](https://example.docsy.dev/).
-
-You can find detailed theme instructions in the Docsy user guide: https://docsy.dev/docs/
-
-This is not an officially supported Google product. This project is currently maintained.
-
-## Using the Docsy Example Project as a template
-
-A simple way to get started is to use this project as a template, which gives you a site project that is set up and ready to use. To do this: 
-
-1. Click **Use this template**.
-
-2. Select a name for your new project and click **Create repository from template**.
-
-3. Make your own local working copy of your new repo using git clone, replacing https://github.com/my/example.git with your repo’s web URL:
+Clone this repository:
 
 ```bash
-git clone --recurse-submodules --depth 1 https://github.com/my/example.git
+git clone --recurse-submodules https://github.com/apache/avro-website.git
 ```
 
 You can now edit your own versions of the site’s source files.
@@ -46,13 +29,13 @@ You can find out more about how to install Hugo for your environment in our
 Once you've made your working copy of the site repo, from the repo root folder, run:
 
 ```
-hugo server
+hugo server --navigateToChanged
 ```
 
 ## Running a container locally
 
-You can run docsy-example inside a [Docker](https://docs.docker.com/)
-container, the container runs with a volume bound to the `docsy-example`
+You can run avro-website inside a [Docker](https://docs.docker.com/)
+container, the container runs with a volume bound to the `avro-website`
 folder. This approach doesn't require you to install any dependencies other
 than [Docker Desktop](https://www.docker.com/products/docker-desktop) on
 Windows and Mac, and [Docker Compose](https://docs.docker.com/compose/install/)
@@ -91,7 +74,7 @@ docker-compose rm
 For more information see the [Docker Compose
 documentation](https://docs.docker.com/compose/gettingstarted/).
 
-## Troubleshooting
+### Troubleshooting
 
 As you run the website locally, you may run into the following error:
 
@@ -107,3 +90,28 @@ Error: Error building site: TOCSS: failed to transform "scss/main.scss" (text/x-
 This error occurs if you have not installed the extended version of Hugo.
 See our [user guide](https://www.docsy.dev/docs/getting-started/) for instructions on how to install Hugo.
 
+## Edit content
+
+The website content is in `content/en` folder. It contains `.md` (Markdown) and `.html` (HTML) files.
+
+### Layouts
+
+To change the layout of any page edit `layouts/<page>/**.html`. If there is no layout for a given page at that location then copy the one provided by the theme and edit it:
+
+     cp themes/docsy/layouts/<xyz> layouts/<xyz>
+
+### Avro version
+
+When a new version of Apache Avro is released:
+
+1. Change the value of `params.avroversion` in `config.toml`
+2. Add a new entry to the `Releases` pages in the `Blog` section, for example:
+```
+cp content/en/blog/releases/avro-1.10.2-released.md content/en/blog/releases/avro-1.11.0-released.md
+```
+
+### API documentation for C/C++/C# modules
+
+The API documentations for C/C++/C# are built by their respective `build.sh dist` implementations. The final HTML should be copied to the `external` folder, for example:
+
+    cp ../avro/build/avro-doc-1.12.0-SNAPSHOT/api/c/* content/en/docs/external/c/
