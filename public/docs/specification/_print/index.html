@@ -140,7 +140,7 @@ This document defines Apache Avro. It is intended to be the authoritative specif
   aria-label="Search this site…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.af79af5c3e1354227a38c5a541c5fd72.json"
+  data-offline-search-index-json-src="/offline-search-index.3f1dc37bcddecaad350f5304946e9c73.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -216,14 +216,14 @@ This the multi-page printable view of this section.
 <li><em>float</em>: single precision (32-bit) IEEE 754 floating-point number</li>
 <li><em>double</em>: double precision (64-bit) IEEE 754 floating-point number</li>
 <li><em>bytes</em>: sequence of 8-bit unsigned bytes</li>
-<li><em>string</em>: unicode character sequence
-Primitive types have no specified attributes.</li>
+<li><em>string</em>: unicode character sequence</li>
 </ul>
+<p>Primitive types have no specified attributes.</p>
 <p>Primitive type names are also defined type names. Thus, for example, the schema &ldquo;string&rdquo; is equivalent to:</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#000;font-weight:bold">{</span><span style="color:#204a87;font-weight:bold">&#34;type&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;string&#34;</span><span style="color:#000;font-weight:bold">}</span>
 </code></pre></div><h2 id="complex-types">Complex Types</h2>
 <p>Avro supports six kinds of complex types: <em>records</em>, <em>enums</em>, <em>arrays</em>, <em>maps</em>, <em>unions</em> and <em>fixed</em>.</p>
-<h3 id="records">Records</h3>
+<h3 id="schema-record">Records</h3>
 <p>Records use the type name &ldquo;record&rdquo; and support three attributes:</p>
 <ul>
 <li><em>name</em>: a JSON string providing the name of the record (required).</li>
@@ -234,7 +234,7 @@ Primitive types have no specified attributes.</li>
 <ul>
 <li><em>name</em>: a JSON string providing the name of the field (required), and</li>
 <li><em>doc</em>: a JSON string describing this field for users (optional).</li>
-<li><em>type</em>: a schema, as defined above</li>
+<li><em>type</em>: a <a href="#schema-declaration" title="Schema declaration">schema</a>, as defined above</li>
 <li><em>default</em>: A default value for this field, only used when reading instances that lack the field for schema evolution purposes. The presence of a default value does not make the field optional at encoding time. Permitted values depend on the field&rsquo;s schema type, according to the table below. Default values for union fields correspond to the first schema in the union. Default values for bytes and fixed fields are JSON strings, where Unicode code points 0-255 are mapped to unsigned 8-bit byte values 0-255. Avro encodes a field even if its value is equal to its default.</li>
 </ul>
 </li>
@@ -327,7 +327,7 @@ Primitive types have no specified attributes.</li>
 <li><em>namespace</em>, a JSON string that qualifies the name;</li>
 <li><em>aliases</em>: a JSON array of strings, providing alternate names for this enum (optional).</li>
 <li><em>doc</em>: a JSON string providing documentation to the user of this schema (optional).</li>
-<li><em>symbols</em>: a JSON array, listing symbols, as JSON strings (required). All symbols in an enum must be unique; duplicates are prohibited. Every symbol must match the regular expression [A-Za-z_][A-Za-z0-9_]* (the same requirement as for names).</li>
+<li><em>symbols</em>: a JSON array, listing symbols, as JSON strings (required). All symbols in an enum must be unique; duplicates are prohibited. Every symbol must match the regular expression [A-Za-z_][A-Za-z0-9_]* (the same requirement as for <a href="#names" title="Names">names</a>).</li>
 <li><em>default</em>: A default value for this enumeration, used during resolution when the reader encounters a symbol from the writer that isn&rsquo;t defined in the reader&rsquo;s schema (optional). The value provided here must be a JSON string that&rsquo;s a member of the symbols array. See documentation on schema resolution for how this gets used.</li>
 </ul>
 <p>For example, playing card suits might be defined with:</p>
@@ -361,7 +361,7 @@ Primitive types have no specified attributes.</li>
 <span style="color:#000;font-weight:bold">}</span>
 </code></pre></div><h3 id="unions">Unions</h3>
 <p>Unions, as mentioned above, are represented using JSON arrays. For example, [&ldquo;null&rdquo;, &ldquo;string&rdquo;] declares a schema which may be either a null or string.</p>
-<p>(Note that when a default value is specified for a record field whose type is a union, the type of the default value must match the first element of the union. Thus, for unions containing &ldquo;null&rdquo;, the &ldquo;null&rdquo; is usually listed first, since the default value of such unions is typically null.)</p>
+<p>(Note that when a <a href="#schema-record" title="Schema record">default value</a> is specified for a record field whose type is a union, the type of the default value must match the first element of the union. Thus, for unions containing &ldquo;null&rdquo;, the &ldquo;null&rdquo; is usually listed first, since the default value of such unions is typically null.)</p>
 <p>Unions may not contain more than one schema with the same type, except for the named types record, fixed and enum. For example, unions containing two array types or two map types are not permitted, but two types with different names are permitted. (Names permit efficient resolution when reading and writing unions.)</p>
 <p>Unions may not immediately contain other unions.</p>
 <h3 id="fixed">Fixed</h3>
@@ -399,7 +399,7 @@ Primitive types have no specified attributes.</li>
 <p>A type alias may be specified either as a fully namespace-qualified, or relative to the namespace of the name it is an alias for. For example, if a type named &ldquo;a.b&rdquo; has aliases of &ldquo;c&rdquo; and &ldquo;x.y&rdquo;, then the fully qualified names of its aliases are &ldquo;a.c&rdquo; and &ldquo;x.y&rdquo;.</p>
 <h2 id="data-serialization-and-deserialization">Data Serialization and Deserialization</h2>
 <p>Binary encoded Avro data does not include type information or field names. The benefit is that the serialized data is small, but as a result a schema must always be used in order to read Avro data correctly. The best way to ensure that the schema is structurally identical to the one used to write the data is to use the exact same schema.</p>
-<p>Therefore, files or systems that store Avro data should always include the writer&rsquo;s schema for that data. Avro-based remote procedure call (RPC) systems must also guarantee that remote recipients of data have a copy of the schema used to write that data. In general, it is advisable that any reader of Avro data should use a schema that is the same (as defined more fully in Parsing Canonical Form for Schemas) as the schema that was used to write the data in order to deserialize it correctly. Deserializing data into a newer schema is accomplished by specifying an additional schema, the results of which are described in Schema Resolution.</p>
+<p>Therefore, files or systems that store Avro data should always include the writer&rsquo;s schema for that data. Avro-based remote procedure call (RPC) systems must also guarantee that remote recipients of data have a copy of the schema used to write that data. In general, it is advisable that any reader of Avro data should use a schema that is the same (as defined more fully in <a href="#parsing-canonical-form-for-schemas" title="Parsing Canonical Form for Schemas">Parsing Canonical Form for Schemas</a>) as the schema that was used to write the data in order to deserialize it correctly. Deserializing data into a newer schema is accomplished by specifying an additional schema, the results of which are described in <a href="#schema-resolution">Schema Resolution</a>.</p>
 <p>In general, both serialization and deserialization proceed as a depth-first, left-to-right traversal of the schema, serializing or deserializing primitive types as they are encountered. Therefore, it is possible, though not advisable, to read Avro data with a schema that does not have the same Parsing Canonical Form as the schema with which the data was written. In order for this to work, the serialized primitive values must be compatible, in order value by value, with the items in the deserialization schema. For example, int and long are always serialized the same way, so an int could be deserialized as a long. Since the compatibility of two schemas depends on both the data and the serialization format (eg. binary is more permissive than JSON because JSON includes field names, eg. a long that is too large will overflow an int), it is simpler and more reliable to use schemas with identical Parsing Canonical Form.</p>
 <h3 id="encodings">Encodings</h3>
 <p>Avro specifies two serialization encodings: binary and JSON. Most applications will use the binary encoding, as it is smaller and faster. But, for debugging and web-based applications, the JSON encoding may sometimes be appropriate.</p>
@@ -410,7 +410,7 @@ Primitive types have no specified attributes.</li>
 <ul>
 <li><em>null</em> is written as zero bytes.</li>
 <li>a <em>boolean</em> is written as a single byte whose value is either 0 (false) or 1 (true).</li>
-<li><em>int</em> and <em>long</em> values are written using variable-length zig-zag coding. Some examples:</li>
+<li><em>int</em> and <em>long</em> values are written using <a href="https://lucene.apache.org/java/3_5_0/fileformats.html#VInt">variable-length</a> <a href="https://code.google.com/apis/protocolbuffers/docs/encoding.html#types">zig-zag</a> coding. Some examples:</li>
 </ul>
 <table>
 <thead>
@@ -459,8 +459,8 @@ Primitive types have no specified attributes.</li>
 </tbody>
 </table>
 <ul>
-<li>a <em>float</em> is written as 4 bytes. The float is converted into a 32-bit integer using a method equivalent to Java&rsquo;s <a href="https://docs.oracle.com/javase/6/docs/api/java/lang/Float.html#floatToIntBits%28float%29">floatToIntBits</a> and then encoded in little-endian format.</li>
-<li>a <em>double</em> is written as 8 bytes. The double is converted into a 64-bit integer using a method equivalent to Java&rsquo;s <a href="https://docs.oracle.com/javase/6/docs/api/java/lang/Double.html#doubleToLongBits%28double%29">doubleToLongBits</a> and then encoded in little-endian format.</li>
+<li>a <em>float</em> is written as 4 bytes. The float is converted into a 32-bit integer using a method equivalent to Java&rsquo;s <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Float.html#floatToIntBits-float-">floatToIntBits</a> and then encoded in little-endian format.</li>
+<li>a <em>double</em> is written as 8 bytes. The double is converted into a 64-bit integer using a method equivalent to Java&rsquo;s <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Double.html#doubleToLongBits-double-">doubleToLongBits</a> and then encoded in little-endian format.</li>
 <li><em>bytes</em> are encoded as a long followed by that many bytes of data.</li>
 <li>a <em>string</em> is encoded as a long followed by that many bytes of UTF-8 encoded character data.
 For example, the three-character string &ldquo;foo&rdquo; would be encoded as the long value 3 (encoded as hex 06) followed by the UTF-8 encoding of &lsquo;f&rsquo;, &lsquo;o&rsquo;, and &lsquo;o&rsquo; (the hex bytes 66 6f 6f):</li>
@@ -468,7 +468,7 @@ For example, the three-character string &ldquo;foo&rdquo; would be encoded as th
 <pre><code>06 66 6f 6f
 </code></pre><h3 id="complex-types-1">Complex Types</h3>
 <p>Complex types are encoded in binary as follows:</p>
-<h4 id="records-1">Records</h4>
+<h4 id="records">Records</h4>
 <p>A record is encoded by encoding the values of its fields in the order that they are declared. In other words, a record is encoded as just the concatenation of the encodings of its fields. Field values are encoded per their schema.</p>
 <p>For example, the record schema</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#000;font-weight:bold">{</span>
@@ -494,7 +494,7 @@ For example, the three-character string &ldquo;foo&rdquo; would be encoded as th
 </code></pre></div><p>an array containing the items 3 and 27 could be encoded as the long value 2 (encoded as hex 04) followed by long values 3 and 27 (encoded as hex 06 36) terminated by zero:</p>
 <pre><code>04 06 36 00
 </code></pre><p>The blocked representation permits one to read and write arrays larger than can be buffered in memory, since one can start writing items without knowing the full length of the array.</p>
-<h4 id="maps-1">Maps</h4>
+<h4 id="schema-maps">Maps</h4>
 <p>Maps are encoded as a series of <em>blocks</em>. Each block consists of a <code>long</code> <em>count</em> value, followed by that many key/value pairs. A block with count zero indicates the end of the map. Each item is encoded per the map&rsquo;s value schema.</p>
 <p>If a block&rsquo;s count is negative, its absolute value is used, and the count is followed immediately by a <code>long</code> block size indicating the number of bytes in the block. This block size permits fast skipping through data, e.g., when projecting a record to a subset of its fields.</p>
 <p>The blocked representation permits one to read and write maps larger than can be buffered in memory, since one can start writing items without knowing the full length of the map.</p>
@@ -511,7 +511,7 @@ NOTE: Currently for C/C++ implementations, the positions are practically an int,
 <h4 id="fixed-1">Fixed</h4>
 <p>Fixed instances are encoded using the number of bytes declared in the schema.</p>
 <h3 id="json-encoding">JSON Encoding</h3>
-<p>Except for unions, the JSON encoding is the same as is used to encode field default values.</p>
+<p>Except for unions, the JSON encoding is the same as is used to encode <a href="#schema-record">field default values</a>.</p>
 <p>The value of a union is encoded in JSON as follows:</p>
 <ul>
 <li>if its type is <em>null</em>, then it is encoded as a JSON <em>null</em>;</li>
@@ -523,17 +523,17 @@ NOTE: Currently for C/C++ implementations, the positions are practically an int,
 <li>the string &ldquo;a&rdquo; as <code>{&quot;string&quot;: &quot;a&quot;}</code> and</li>
 <li>a Foo instance as <code>{&quot;Foo&quot;: {...}}</code>, where <code>{...}</code> indicates the JSON encoding of a Foo instance.</li>
 </ul>
-<p>Note that the original schema is still required to correctly process JSON-encoded data. For example, the JSON encoding does not distinguish between int and long, float and double, records and maps, enums and strings, etc.</p>
+<p>Note that the original schema is still required to correctly process JSON-encoded data. For example, the JSON encoding does not distinguish between <em>int</em> and <em>long</em>, <em>float</em> and <em>double</em>, records and maps, enums and strings, etc.</p>
 <h4 id="single-object-encoding">Single-object encoding</h4>
 <p>In some situations a single Avro serialized object is to be stored for a longer period of time. One very common example is storing Avro records for several weeks in an <a href="https://kafka.apache.org/">Apache Kafka</a> topic.</p>
 <p>In the period after a schema change this persistence system will contain records that have been written with different schemas. So the need arises to know which schema was used to write a record to support schema evolution correctly. In most cases the schema itself is too large to include in the message, so this binary wrapper format supports the use case more effectively.</p>
 <h5 id="single-object-encoding-specification">Single object encoding specification</h5>
 <p>Single Avro objects are encoded as follows:</p>
-<ul>
+<ol>
 <li>A two-byte marker, <code>C3 01</code>, to show that the message is Avro and uses this single-record format (version 1).</li>
-<li>The 8-byte little-endian CRC-64-AVRO <a href="#schema_fingerprints">fingerprint</a> of the object&rsquo;s schema</li>
-<li>The Avro object encoded using <a href="#binary_encoding">Avro&rsquo;s binary encoding</a></li>
-</ul>
+<li>The 8-byte little-endian CRC-64-AVRO <a href="#schema-fingerprints" title="Schema fingerprints">fingerprint</a> of the object&rsquo;s schema.</li>
+<li>The Avro object encoded using <a href="#binary-encoding">Avro&rsquo;s binary encoding</a>.</li>
+</ol>
 <p>Implementations use the 2-byte marker to determine whether a payload is Avro. This check helps avoid expensive lookups that resolve the schema from a fingerprint, when the message is not an encoded Avro payload.</p>
 <h2 id="sort-order">Sort Order</h2>
 <p>Avro defines a standard sort order for data. This permits data written by one system to be efficiently sorted by another system. This can be an important optimization, as sort order comparisons are sometimes the most frequent per-object operation. Note also that Avro binary-encoded data can be efficiently ordered without deserializing it to objects.</p>
@@ -571,7 +571,7 @@ NOTE: Currently for C/C++ implementations, the positions are practically an int,
 <li>file metadata, including the schema.</li>
 <li>The 16-byte, randomly-generated sync marker for this file.</li>
 </ul>
-<p>File metadata is written as if defined by the following map schema:</p>
+<p>File metadata is written as if defined by the following <a href="#schema-maps">map</a> schema:</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#000;font-weight:bold">{</span><span style="color:#204a87;font-weight:bold">&#34;type&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;map&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">&#34;values&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;bytes&#34;</span><span style="color:#000;font-weight:bold">}</span>
 </code></pre></div><p>All metadata properties that start with &ldquo;avro.&rdquo; are reserved. The following file metadata properties are currently used:</p>
 <ul>

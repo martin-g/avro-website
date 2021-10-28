@@ -9,7 +9,7 @@ date: 2021-10-25
 ## Introduction
 This document defines Apache Avro. It is intended to be the authoritative specification. Implementations of Avro must adhere to this document.
 
-## Schema Declaration
+## Schema Declaration {#schema-declaration}
 A Schema is represented in [JSON](https://www.json.org/) by one of:
 
 * A JSON string, naming a defined type.
@@ -31,6 +31,7 @@ The set of primitive type names is:
 * _double_: double precision (64-bit) IEEE 754 floating-point number
 * _bytes_: sequence of 8-bit unsigned bytes
 * _string_: unicode character sequence
+
 Primitive types have no specified attributes.
 
 Primitive type names are also defined type names. Thus, for example, the schema "string" is equivalent to:
@@ -41,7 +42,7 @@ Primitive type names are also defined type names. Thus, for example, the schema 
 ## Complex Types
 Avro supports six kinds of complex types: _records_, _enums_, _arrays_, _maps_, _unions_ and _fixed_.
 
-### Records
+### Records {#schema-record}
 Records use the type name "record" and support three attributes:
 
 * _name_: a JSON string providing the name of the record (required).
@@ -51,7 +52,7 @@ Records use the type name "record" and support three attributes:
 * _fields_: a JSON array, listing fields (required). Each field is a JSON object with the following attributes:
   * _name_: a JSON string providing the name of the field (required), and
   * _doc_: a JSON string describing this field for users (optional).
-  * _type_: a schema, as defined above
+  * _type_: a [schema]({{< ref "#schema-declaration" >}} "Schema declaration"), as defined above
   * _default_: A default value for this field, only used when reading instances that lack the field for schema evolution purposes. The presence of a default value does not make the field optional at encoding time. Permitted values depend on the field's schema type, according to the table below. Default values for union fields correspond to the first schema in the union. Default values for bytes and fixed fields are JSON strings, where Unicode code points 0-255 are mapped to unsigned 8-bit byte values 0-255. Avro encodes a field even if its value is equal to its default.
 
 *field default values*
@@ -92,7 +93,7 @@ Enums use the type name "enum" and support the following attributes:
 * _namespace_, a JSON string that qualifies the name;
 * _aliases_: a JSON array of strings, providing alternate names for this enum (optional).
 * _doc_: a JSON string providing documentation to the user of this schema (optional).
-* _symbols_: a JSON array, listing symbols, as JSON strings (required). All symbols in an enum must be unique; duplicates are prohibited. Every symbol must match the regular expression [A-Za-z_][A-Za-z0-9_]* (the same requirement as for names).
+* _symbols_: a JSON array, listing symbols, as JSON strings (required). All symbols in an enum must be unique; duplicates are prohibited. Every symbol must match the regular expression [A-Za-z_][A-Za-z0-9_]* (the same requirement as for [names]({{< ref "#names" >}} "Names")).
 * _default_: A default value for this enumeration, used during resolution when the reader encounters a symbol from the writer that isn't defined in the reader's schema (optional). The value provided here must be a JSON string that's a member of the symbols array. See documentation on schema resolution for how this gets used.
 
 For example, playing card suits might be defined with:
@@ -137,7 +138,7 @@ For example, a map from string to long is declared with:
 ### Unions
 Unions, as mentioned above, are represented using JSON arrays. For example, ["null", "string"] declares a schema which may be either a null or string.
 
-(Note that when a default value is specified for a record field whose type is a union, the type of the default value must match the first element of the union. Thus, for unions containing "null", the "null" is usually listed first, since the default value of such unions is typically null.)
+(Note that when a [default value]({{< ref "#schema-record" >}} "Schema record") is specified for a record field whose type is a union, the type of the default value must match the first element of the union. Thus, for unions containing "null", the "null" is usually listed first, since the default value of such unions is typically null.)
 
 Unions may not contain more than one schema with the same type, except for the named types record, fixed and enum. For example, unions containing two array types or two map types are not permitted, but two types with different names are permitted. (Names permit efficient resolution when reading and writing unions.)
 
@@ -156,7 +157,7 @@ For example, 16-byte quantity may be declared with:
 {"type": "fixed", "size": 16, "name": "md5"}
 ```
 
-### Names
+### Names {#names}
 Record, enums and fixed are named types. Each has a fullname that is composed of two parts; a name and a namespace. Equality of names is defined on the fullname.
 
 The name portion of a fullname, record field names, and enum symbols must:
@@ -193,14 +194,14 @@ A type alias may be specified either as a fully namespace-qualified, or relative
 ## Data Serialization and Deserialization
 Binary encoded Avro data does not include type information or field names. The benefit is that the serialized data is small, but as a result a schema must always be used in order to read Avro data correctly. The best way to ensure that the schema is structurally identical to the one used to write the data is to use the exact same schema.
 
-Therefore, files or systems that store Avro data should always include the writer's schema for that data. Avro-based remote procedure call (RPC) systems must also guarantee that remote recipients of data have a copy of the schema used to write that data. In general, it is advisable that any reader of Avro data should use a schema that is the same (as defined more fully in Parsing Canonical Form for Schemas) as the schema that was used to write the data in order to deserialize it correctly. Deserializing data into a newer schema is accomplished by specifying an additional schema, the results of which are described in Schema Resolution.
+Therefore, files or systems that store Avro data should always include the writer's schema for that data. Avro-based remote procedure call (RPC) systems must also guarantee that remote recipients of data have a copy of the schema used to write that data. In general, it is advisable that any reader of Avro data should use a schema that is the same (as defined more fully in [Parsing Canonical Form for Schemas]({{< ref "#parsing-canonical-form-for-schemas" >}} "Parsing Canonical Form for Schemas")) as the schema that was used to write the data in order to deserialize it correctly. Deserializing data into a newer schema is accomplished by specifying an additional schema, the results of which are described in [Schema Resolution]({{< ref "#schema-resolution" >}}).
 
 In general, both serialization and deserialization proceed as a depth-first, left-to-right traversal of the schema, serializing or deserializing primitive types as they are encountered. Therefore, it is possible, though not advisable, to read Avro data with a schema that does not have the same Parsing Canonical Form as the schema with which the data was written. In order for this to work, the serialized primitive values must be compatible, in order value by value, with the items in the deserialization schema. For example, int and long are always serialized the same way, so an int could be deserialized as a long. Since the compatibility of two schemas depends on both the data and the serialization format (eg. binary is more permissive than JSON because JSON includes field names, eg. a long that is too large will overflow an int), it is simpler and more reliable to use schemas with identical Parsing Canonical Form.
 
 ### Encodings
 Avro specifies two serialization encodings: binary and JSON. Most applications will use the binary encoding, as it is smaller and faster. But, for debugging and web-based applications, the JSON encoding may sometimes be appropriate.
 
-### Binary Encoding
+### Binary Encoding {#binary-encoding}
 Binary encoding does not include field names, self-contained information about the types of individual bytes, nor field or record separators. Therefore readers are wholly reliant on the schema used when the data was encoded.
 
 #### Primitive Types
@@ -208,7 +209,7 @@ Primitive types are encoded in binary as follows:
 
 * _null_ is written as zero bytes.
 * a _boolean_ is written as a single byte whose value is either 0 (false) or 1 (true).
-* _int_ and _long_ values are written using variable-length zig-zag coding. Some examples:
+* _int_ and _long_ values are written using [variable-length](https://lucene.apache.org/java/3_5_0/fileformats.html#VInt) [zig-zag](https://code.google.com/apis/protocolbuffers/docs/encoding.html#types) coding. Some examples:
 
 | *value* | *hex* |
 |---|---|
@@ -222,8 +223,8 @@ Primitive types are encoded in binary as follows:
 |64 | 80 01|
 |...|...|
 
-* a _float_ is written as 4 bytes. The float is converted into a 32-bit integer using a method equivalent to Java's [floatToIntBits](https://docs.oracle.com/javase/6/docs/api/java/lang/Float.html#floatToIntBits%28float%29) and then encoded in little-endian format.
-* a _double_ is written as 8 bytes. The double is converted into a 64-bit integer using a method equivalent to Java's [doubleToLongBits](https://docs.oracle.com/javase/6/docs/api/java/lang/Double.html#doubleToLongBits%28double%29) and then encoded in little-endian format.
+* a _float_ is written as 4 bytes. The float is converted into a 32-bit integer using a method equivalent to Java's [floatToIntBits](https://docs.oracle.com/javase/8/docs/api/java/lang/Float.html#floatToIntBits-float-) and then encoded in little-endian format.
+* a _double_ is written as 8 bytes. The double is converted into a 64-bit integer using a method equivalent to Java's [doubleToLongBits](https://docs.oracle.com/javase/8/docs/api/java/lang/Double.html#doubleToLongBits-double-) and then encoded in little-endian format.
 * _bytes_ are encoded as a long followed by that many bytes of data.
 * a _string_ is encoded as a long followed by that many bytes of UTF-8 encoded character data.
 For example, the three-character string "foo" would be encoded as the long value 3 (encoded as hex 06) followed by the UTF-8 encoding of 'f', 'o', and 'o' (the hex bytes 66 6f 6f):
@@ -280,7 +281,7 @@ an array containing the items 3 and 27 could be encoded as the long value 2 (enc
 
 The blocked representation permits one to read and write arrays larger than can be buffered in memory, since one can start writing items without knowing the full length of the array.
 
-#### Maps
+#### Maps {#schema-maps}
 Maps are encoded as a series of _blocks_. Each block consists of a `long` _count_ value, followed by that many key/value pairs. A block with count zero indicates the end of the map. Each item is encoded per the map's value schema.
 
 If a block's count is negative, its absolute value is used, and the count is followed immediately by a `long` block size indicating the number of bytes in the block. This block size permits fast skipping through data, e.g., when projecting a record to a subset of its fields.
@@ -302,7 +303,7 @@ NOTE: Currently for C/C++ implementations, the positions are practically an int,
 Fixed instances are encoded using the number of bytes declared in the schema.
 
 ### JSON Encoding
-Except for unions, the JSON encoding is the same as is used to encode field default values.
+Except for unions, the JSON encoding is the same as is used to encode [field default values]({{< ref "#schema-record" >}}).
 
 The value of a union is encoded in JSON as follows:
 
@@ -315,7 +316,7 @@ For example, the union schema ["null","string","Foo"], where Foo is a record nam
 * the string "a" as `{"string": "a"}` and
 * a Foo instance as `{"Foo": {...}}`, where `{...}` indicates the JSON encoding of a Foo instance.
 
-Note that the original schema is still required to correctly process JSON-encoded data. For example, the JSON encoding does not distinguish between int and long, float and double, records and maps, enums and strings, etc.
+Note that the original schema is still required to correctly process JSON-encoded data. For example, the JSON encoding does not distinguish between _int_ and _long_, _float_ and _double_, records and maps, enums and strings, etc.
 
 #### Single-object encoding
 In some situations a single Avro serialized object is to be stored for a longer period of time. One very common example is storing Avro records for several weeks in an [Apache Kafka](https://kafka.apache.org/) topic.
@@ -325,9 +326,9 @@ In the period after a schema change this persistence system will contain records
 ##### Single object encoding specification
 Single Avro objects are encoded as follows:
 
-* A two-byte marker, `C3 01`, to show that the message is Avro and uses this single-record format (version 1).
-* The 8-byte little-endian CRC-64-AVRO [fingerprint](#schema_fingerprints) of the object's schema
-* The Avro object encoded using [Avro's binary encoding](#binary_encoding)
+1. A two-byte marker, `C3 01`, to show that the message is Avro and uses this single-record format (version 1).
+1. The 8-byte little-endian CRC-64-AVRO [fingerprint]({{< ref "#schema-fingerprints" >}} "Schema fingerprints") of the object's schema.
+1. The Avro object encoded using [Avro's binary encoding]({{< ref "#binary-encoding" >}}).
 
 Implementations use the 2-byte marker to determine whether a payload is Avro. This check helps avoid expensive lookups that resolve the schema from a fingerprint, when the message is not an encoded Avro payload.
 
@@ -368,7 +369,7 @@ A file header consists of:
 * file metadata, including the schema.
 *  The 16-byte, randomly-generated sync marker for this file.
 
-File metadata is written as if defined by the following map schema:
+File metadata is written as if defined by the following [map]({{< ref "#schema-maps" >}}) schema:
 ```json
 {"type": "map", "values": "bytes"}
 ```
@@ -575,7 +576,7 @@ When a message is declared one-way and a stateful connection has been establishe
   * if the error flag is false, the message _response_, serialized per the message's response schema.
   * if the error flag is true, the _error_, serialized per the message's effective error union schema.
 
-### Schema Resolution
+### Schema Resolution {#schema-resolution}
 A reader of Avro data, whether from an RPC or a file, can always parse that data because the original schema must be provided along with the data. However, the reader may be programmed to read data into a different schema. For example, if the data was written with a different version of the software than it is read, then fields may have been added or removed from records. This section specifies how such schema differences should be resolved.
 
 We refer to the schema used to write the data as the writer's schema, and the schema that the application expects the reader's schema. Differences between these should be resolved as follows:
@@ -621,7 +622,7 @@ If the reader's schema matches the selected writer's schema, it is recursively r
 
 A schema's _doc_ fields are ignored for the purposes of schema resolution. Hence, the _doc_ portion of a schema may be dropped at serialization.
 
-### Parsing Canonical Form for Schemas
+### Parsing Canonical Form for Schemas {#parsing-canonical-form-for-schemas}
 One of the defining characteristics of Avro is that a reader must use the schema used by the writer of the data in order to know how to read the data. This assumption results in a data format that's compact and also amenable to many forms of schema evolution. However, the specification so far has not defined what it means for the reader to have the "same" schema as the writer. Does the schema need to be textually identical? Well, clearly adding or removing some whitespace to a JSON expression does not change its meaning. At the same time, reordering the fields of records clearly does change the meaning. So what does it mean for a reader to have "the same" schema as a writer?
 
 Parsing Canonical Form is a transformation of a writer's schema that let's us define what it means for two schemas to be "the same" for the purpose of reading data written against the schema. It is called Parsing Canonical Form because the transformations strip away parts of the schema, like "doc" attributes, that are irrelevant to readers trying to parse incoming data. It is called Canonical Form because the transformations normalize the JSON text (such as the order of attributes) in a way that eliminates unimportant differences between schemas. If the Parsing Canonical Forms of two different schemas are textually equal, then those schemas are "the same" as far as any reader is concerned, i.e., there is no serialized data that would allow a reader to distinguish data generated by a writer using one of the original schemas from data generated by a writing using the other original schema. (We sketch a proof of this property in a companion document.)
@@ -639,7 +640,7 @@ Assuming an input schema (in JSON form) that's already UTF-8 text for a _valid_ 
 * [INTEGERS] Eliminate quotes around and any leading zeros in front of JSON integer literals (which appear in the _size_ attributes of _fixed_ schemas).
 * [WHITESPACE] Eliminate all whitespace in JSON outside of string literals.
 
-#### Schema Fingerprints
+#### Schema Fingerprints {#schema-fingerprints}
 "[A] fingerprinting algorithm is a procedure that maps an arbitrarily large data item (such as a computer file) to a much shorter bit string, its fingerprint, that uniquely identifies the original data for all practical purposes" (quoted from [Wikipedia](https://en.wikipedia.org/wiki/Fingerprint_(computing))). In the Avro context, fingerprints of Parsing Canonical Form can be useful in a number of applications; for example, to cache encoder and decoder objects, to tag data items with a short substitute for the writer's full schema, and to quickly negotiate common-case schemas between readers and writers.
 
 In designing fingerprinting algorithms, there is a fundamental trade-off between the length of the fingerprint and the probability of collisions. To help application designers find appropriate points within this trade-off space, while encouraging interoperability and ease of implementation, we recommend using one of the following three algorithms when fingerprinting Avro schemas:
