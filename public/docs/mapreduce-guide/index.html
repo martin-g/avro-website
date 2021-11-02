@@ -38,8 +38,8 @@
 
 
 
-<link rel="preload" href="/scss/main.min.30d73e35c90f654c060d7e7add9a2e7c0ba6dad30372ff7416b222681b7b4652.css" as="style">
-<link href="/scss/main.min.30d73e35c90f654c060d7e7add9a2e7c0ba6dad30372ff7416b222681b7b4652.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.e2f461f17ef9d7b97e4cb3adc47f4d36c759858228446e79861b186d195eb3e6.css" as="style">
+<link href="/scss/main.min.e2f461f17ef9d7b97e4cb3adc47f4d36c759858228446e79861b186d195eb3e6.css" rel="stylesheet" integrity="">
 
 
 <script
@@ -139,7 +139,7 @@
   aria-label="Search this site…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.3f1dc37bcddecaad350f5304946e9c73.json"
+  data-offline-search-index-json-src="/offline-search-index.f7b4641156bbf2a89be43a76cba72476.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -167,7 +167,7 @@
   aria-label="Search this site…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.3f1dc37bcddecaad350f5304946e9c73.json"
+  data-offline-search-index-json-src="/offline-search-index.f7b4641156bbf2a89be43a76cba72476.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -364,12 +364,12 @@
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#204a87;font-weight:bold">&lt;dependency&gt;</span>
   <span style="color:#204a87;font-weight:bold">&lt;groupId&gt;</span>org.apache.avro<span style="color:#204a87;font-weight:bold">&lt;/groupId&gt;</span>
   <span style="color:#204a87;font-weight:bold">&lt;artifactId&gt;</span>avro<span style="color:#204a87;font-weight:bold">&lt;/artifactId&gt;</span>
-  <span style="color:#204a87;font-weight:bold">&lt;version&gt;</span>1.10.2<span style="color:#204a87;font-weight:bold">&lt;/version&gt;</span>
+  <span style="color:#204a87;font-weight:bold">&lt;version&gt;</span>1.11.0<span style="color:#204a87;font-weight:bold">&lt;/version&gt;</span>
 <span style="color:#204a87;font-weight:bold">&lt;/dependency&gt;</span>
 <span style="color:#204a87;font-weight:bold">&lt;dependency&gt;</span>
   <span style="color:#204a87;font-weight:bold">&lt;groupId&gt;</span>org.apache.avro<span style="color:#204a87;font-weight:bold">&lt;/groupId&gt;</span>
   <span style="color:#204a87;font-weight:bold">&lt;artifactId&gt;</span>avro-mapred<span style="color:#204a87;font-weight:bold">&lt;/artifactId&gt;</span>
-  <span style="color:#204a87;font-weight:bold">&lt;version&gt;</span>1.10.2<span style="color:#204a87;font-weight:bold">&lt;/version&gt;</span>
+  <span style="color:#204a87;font-weight:bold">&lt;version&gt;</span>1.11.0<span style="color:#204a87;font-weight:bold">&lt;/version&gt;</span>
 <span style="color:#204a87;font-weight:bold">&lt;/dependency&gt;</span>
 <span style="color:#204a87;font-weight:bold">&lt;dependency&gt;</span>
   <span style="color:#204a87;font-weight:bold">&lt;groupId&gt;</span>org.apache.hadoop<span style="color:#204a87;font-weight:bold">&lt;/groupId&gt;</span>
@@ -380,7 +380,7 @@
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#204a87;font-weight:bold">&lt;plugin&gt;</span>
   <span style="color:#204a87;font-weight:bold">&lt;groupId&gt;</span>org.apache.avro<span style="color:#204a87;font-weight:bold">&lt;/groupId&gt;</span>
   <span style="color:#204a87;font-weight:bold">&lt;artifactId&gt;</span>avro-maven-plugin<span style="color:#204a87;font-weight:bold">&lt;/artifactId&gt;</span>
-  <span style="color:#204a87;font-weight:bold">&lt;version&gt;</span>1.10.2<span style="color:#204a87;font-weight:bold">&lt;/version&gt;</span>
+  <span style="color:#204a87;font-weight:bold">&lt;version&gt;</span>1.11.0<span style="color:#204a87;font-weight:bold">&lt;/version&gt;</span>
   <span style="color:#204a87;font-weight:bold">&lt;executions&gt;</span>
     <span style="color:#204a87;font-weight:bold">&lt;execution&gt;</span>
       <span style="color:#204a87;font-weight:bold">&lt;phase&gt;</span>generate-sources<span style="color:#204a87;font-weight:bold">&lt;/phase&gt;</span>
@@ -395,7 +395,7 @@
   <span style="color:#204a87;font-weight:bold">&lt;/executions&gt;</span>
 <span style="color:#204a87;font-weight:bold">&lt;/plugin&gt;</span>
 </code></pre></div><p>If you do not configure the <em>sourceDirectory</em> and <em>outputDirectory</em> properties, the defaults will be used. The <em>sourceDirectory</em> property defaults to <em>src/main/avro</em>. The <em>outputDirectory</em> property defaults to <em>target/generated-sources</em>. You can change the paths to match your project layout.</p>
-<p>Alternatively, Avro jars can be downloaded directly from the Apache Avro™ Releases <a href="https://avro.apache.org/releases.html">page</a>. The relevant Avro jars for this guide are <em>avro-1.10.2.jar</em> and <em>avro-mapred-1.10.2.jar</em>, as well as <em>avro-tools-1.10.2.jar</em> for code generation and viewing Avro data files as JSON. In addition, you will need to install Hadoop in order to use MapReduce.</p>
+<p>Alternatively, Avro jars can be downloaded directly from the Apache Avro™ Releases <a href="https://avro.apache.org/releases.html">page</a>. The relevant Avro jars for this guide are <em>avro-1.11.0.jar</em> and <em>avro-mapred-1.11.0.jar</em>, as well as <em>avro-tools-1.11.0.jar</em> for code generation and viewing Avro data files as JSON. In addition, you will need to install Hadoop in order to use MapReduce.</p>
 <h2 id="example-colorcount">Example: ColorCount</h2>
 <p>Below is a simple example of a MapReduce that uses Avro. There is an example for both the old (org.apache.hadoop.mapred) and new (org.apache.hadoop.mapreduce) APIs under <em>examples/mr-example/src/main/java/example/</em>. <em>MapredColorCount</em> is the example for the older mapred API while <em>MapReduceColorCount</em> is the example for the newer mapreduce API. Both examples are below, but we will detail the mapred API in our subsequent examples.</p>
 <p>MapredColorCount.java:</p>
@@ -593,7 +593,7 @@
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ls output/
 part-00000.avro  _SUCCESS
 </code></pre></div><p>You can check the contents of the generated Avro file using the avro-tools jar:</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ java -jar /path/to/avro-tools-1.10.2.jar tojson output/part-00000.avro
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ java -jar /path/to/avro-tools-1.11.0.jar tojson output/part-00000.avro
 <span style="color:#ce5c00;font-weight:bold">{</span><span style="color:#4e9a06">&#34;value&#34;</span>: 3, <span style="color:#4e9a06">&#34;key&#34;</span>: <span style="color:#4e9a06">&#34;blue&#34;</span><span style="color:#ce5c00;font-weight:bold">}</span>
 <span style="color:#ce5c00;font-weight:bold">{</span><span style="color:#4e9a06">&#34;value&#34;</span>: 7, <span style="color:#4e9a06">&#34;key&#34;</span>: <span style="color:#4e9a06">&#34;green&#34;</span><span style="color:#ce5c00;font-weight:bold">}</span>
 <span style="color:#ce5c00;font-weight:bold">{</span><span style="color:#4e9a06">&#34;value&#34;</span>: 1, <span style="color:#4e9a06">&#34;key&#34;</span>: <span style="color:#4e9a06">&#34;none&#34;</span><span style="color:#ce5c00;font-weight:bold">}</span>

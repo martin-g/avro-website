@@ -11,7 +11,7 @@ This is a short guide for getting started with Apache Avro™ using Java. This g
 
 ## Download
 
-Avro implementations for C, C++, C#, Java, PHP, Python, and Ruby can be downloaded from the [Apache Avro™ Releases](https://avro.apache.org/releases.html) page. This guide uses Avro {{< avro_version >}}, the latest version at the time of writing. For the examples in this guide, download avro-{{< avro_version >}}.jar and avro-tools-{{< avro_version >}}.jar.
+Avro implementations for C, C++, C#, Java, PHP, Python, and Ruby can be downloaded from the [Apache Avro™ Download]({{< relref "/project/download" >}}) page. This guide uses Avro {{< avro_version >}}, the latest version at the time of writing. For the examples in this guide, download avro-{{< avro_version >}}.jar and avro-tools-{{< avro_version >}}.jar.
 
 Alternatively, if you are using Maven, add the following dependency to your POM:
 

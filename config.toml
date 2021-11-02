@@ -94,7 +94,7 @@ section = ["HTML", "print", "RSS"]
 # section = ["HTML", "RSS"]
 
 [params]
-avroversion = "1.10.2"
+avroversion = "1.11.0"
 copyright = "The Apache Software Foundation"
 privacy_policy = "http://www.apache.org/foundation/policies/privacy.html"
 

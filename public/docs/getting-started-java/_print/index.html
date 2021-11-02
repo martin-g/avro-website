@@ -38,8 +38,8 @@
 
 
 
-<link rel="preload" href="/scss/main.min.30d73e35c90f654c060d7e7add9a2e7c0ba6dad30372ff7416b222681b7b4652.css" as="style">
-<link href="/scss/main.min.30d73e35c90f654c060d7e7add9a2e7c0ba6dad30372ff7416b222681b7b4652.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.e2f461f17ef9d7b97e4cb3adc47f4d36c759858228446e79861b186d195eb3e6.css" as="style">
+<link href="/scss/main.min.e2f461f17ef9d7b97e4cb3adc47f4d36c759858228446e79861b186d195eb3e6.css" rel="stylesheet" integrity="">
 
 
 <script
@@ -139,7 +139,7 @@
   aria-label="Search this site…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.3f1dc37bcddecaad350f5304946e9c73.json"
+  data-offline-search-index-json-src="/offline-search-index.f7b4641156bbf2a89be43a76cba72476.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -194,18 +194,18 @@ This the multi-page printable view of this section.
 <div class="content">
       <p>This is a short guide for getting started with Apache Avro™ using Java. This guide only covers using Avro for data serialization; see Patrick Hunt&rsquo;s <a href="https://github.com/phunt/avro-rpc-quickstart">Avro RPC Quick Start</a> for a good introduction to using Avro for RPC.</p>
 <h2 id="download">Download</h2>
-<p>Avro implementations for C, C++, C#, Java, PHP, Python, and Ruby can be downloaded from the <a href="https://avro.apache.org/releases.html">Apache Avro™ Releases</a> page. This guide uses Avro 1.10.2, the latest version at the time of writing. For the examples in this guide, download avro-1.10.2.jar and avro-tools-1.10.2.jar.</p>
+<p>Avro implementations for C, C++, C#, Java, PHP, Python, and Ruby can be downloaded from the <a href="/project/download/">Apache Avro™ Download</a> page. This guide uses Avro 1.11.0, the latest version at the time of writing. For the examples in this guide, download avro-1.11.0.jar and avro-tools-1.11.0.jar.</p>
 <p>Alternatively, if you are using Maven, add the following dependency to your POM:</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#204a87;font-weight:bold">&lt;dependency&gt;</span>
   <span style="color:#204a87;font-weight:bold">&lt;groupId&gt;</span>org.apache.avro<span style="color:#204a87;font-weight:bold">&lt;/groupId&gt;</span>
   <span style="color:#204a87;font-weight:bold">&lt;artifactId&gt;</span>avro<span style="color:#204a87;font-weight:bold">&lt;/artifactId&gt;</span>
-  <span style="color:#204a87;font-weight:bold">&lt;version&gt;</span>1.10.2<span style="color:#204a87;font-weight:bold">&lt;/version&gt;</span>
+  <span style="color:#204a87;font-weight:bold">&lt;version&gt;</span>1.11.0<span style="color:#204a87;font-weight:bold">&lt;/version&gt;</span>
 <span style="color:#204a87;font-weight:bold">&lt;/dependency&gt;</span>
 </code></pre></div><p>As well as the Avro Maven plugin (for performing code generation):</p>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#204a87;font-weight:bold">&lt;plugin&gt;</span>
   <span style="color:#204a87;font-weight:bold">&lt;groupId&gt;</span>org.apache.avro<span style="color:#204a87;font-weight:bold">&lt;/groupId&gt;</span>
   <span style="color:#204a87;font-weight:bold">&lt;artifactId&gt;</span>avro-maven-plugin<span style="color:#204a87;font-weight:bold">&lt;/artifactId&gt;</span>
-  <span style="color:#204a87;font-weight:bold">&lt;version&gt;</span>1.10.2<span style="color:#204a87;font-weight:bold">&lt;/version&gt;</span>
+  <span style="color:#204a87;font-weight:bold">&lt;version&gt;</span>1.11.0<span style="color:#204a87;font-weight:bold">&lt;/version&gt;</span>
   <span style="color:#204a87;font-weight:bold">&lt;executions&gt;</span>
     <span style="color:#204a87;font-weight:bold">&lt;execution&gt;</span>
       <span style="color:#204a87;font-weight:bold">&lt;phase&gt;</span>generate-sources<span style="color:#204a87;font-weight:bold">&lt;/phase&gt;</span>
@@ -244,9 +244,9 @@ This the multi-page printable view of this section.
 <h2 id="serializing-and-deserializing-with-code-generation">Serializing and deserializing with code generation</h2>
 <h3 id="compiling-the-schema">Compiling the schema</h3>
 <p>Code generation allows us to automatically create classes based on our previously-defined schema. Once we have defined the relevant classes, there is no need to use the schema directly in our programs. We use the avro-tools jar to generate code as follows:</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">java -jar /path/to/avro-tools-1.10.2.jar compile schema &lt;schema file&gt; &lt;destination&gt;
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">java -jar /path/to/avro-tools-1.11.0.jar compile schema &lt;schema file&gt; &lt;destination&gt;
 </code></pre></div><p>This will generate the appropriate source files in a package based on the schema&rsquo;s namespace in the provided destination folder. For instance, to generate a User class in package example.avro from the schema defined above, run</p>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">java -jar /path/to/avro-tools-1.10.2.jar compile schema user.avsc .
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">java -jar /path/to/avro-tools-1.11.0.jar compile schema user.avsc .
 </code></pre></div><p>Note that if you using the Avro Maven plugin, there is no need to manually invoke the schema compiler; the plugin automatically performs code generation on any .avsc files present in the configured source directory.</p>
 <h3 id="creating-users">Creating Users</h3>
 <p>Now that we&rsquo;ve completed the code generation, let&rsquo;s create some Users, serialize them to a data file on disk, and then read back the file and deserialize the User objects.</p>
@@ -303,7 +303,7 @@ This the multi-page printable view of this section.
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ mvn compile <span style="color:#8f5902;font-style:italic"># includes code generation via Avro Maven plugin</span>
 $ mvn -q exec:java -Dexec.mainClass<span style="color:#ce5c00;font-weight:bold">=</span>example.SpecificMain
 </code></pre></div><h3 id="beta-feature-generating-faster-code">Beta feature: Generating faster code</h3>
-<p>In 1.10.2 release we have introduced a new approach to generating code that speeds up decoding of objects by more than 10% and encoding by more than 30% (future performance enhancements are underway). To ensure a smooth introduction of this change into production systems, this feature is controlled by a feature flag, the system property org.apache.avro.specific.use_custom_coders. In this first release, this feature is off by default. To turn it on, set the system flag to true at runtime. In the sample above, for example, you could enable the fater coders as follows:</p>
+<p>In 1.11.0 release we have introduced a new approach to generating code that speeds up decoding of objects by more than 10% and encoding by more than 30% (future performance enhancements are underway). To ensure a smooth introduction of this change into production systems, this feature is controlled by a feature flag, the system property org.apache.avro.specific.use_custom_coders. In this first release, this feature is off by default. To turn it on, set the system flag to true at runtime. In the sample above, for example, you could enable the fater coders as follows:</p>
 <p>$ mvn -q exec:java -Dexec.mainClass=example.SpecificMain<br>
 -Dorg.apache.avro.specific.use_custom_coders=true</p>
 <p>Note that you do not have to recompile your Avro schema to have access to this feature. The feature is compiled and built into your code, and you turn it on and off at runtime using the feature flag. As a result, you can turn it on during testing, for example, and then off in production. Or you can turn it on in production, and quickly turn it off if something breaks.</p>

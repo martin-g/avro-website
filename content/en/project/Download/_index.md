@@ -9,6 +9,14 @@ Releases may be downloaded from Apache mirrors: [Download](https://www.apache.or
 
 The latest release is: Avro {{< avro_version >}} (3.4M, source, [pgp](https://downloads.apache.org/avro/avro-{{< avro_version >}}/avro-src-{{< avro_version >}}.tar.gz.asc), [sha512](https://downloads.apache.org/avro/avro-{{< avro_version >}}/avro-src-{{< avro_version >}}.tar.gz.sha512))
 
+* C#: https://www.nuget.org/packages/Apache.Avro/{{< avro_version >}}
+* Java: from Maven Central,
+* Javascript: https://www.npmjs.com/package/avro-js/v/{{< avro_version >}}
+* Perl: https://metacpan.org/release/Avro
+* Python 3: https://pypi.org/project/avro/{{< avro_version >}}
+* Ruby: https://rubygems.org/gems/avro/versions/{{< avro_version >}}
+
+
 ## Release Notes
 Release notes for Avro releases are available in [Jira](https://issues.apache.org/jira/browse/AVRO?report=com.atlassian.jira.plugin.system.project:changelog-panel#selectedTab=com.atlassian.jira.plugin.system.project%3Achangelog-panel)
 
