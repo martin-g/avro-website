@@ -165,7 +165,17 @@ record Job {
   timestamp_ms finishTime;
   decimal(9,2) finishRatio;
 }
-``` 
+```
+
+Logical types can also be specified via an annotation, which is useful for logical types for which a keyword does not exist:
+
+```java
+record Job {
+  string jobid;
+  @logicalType("timestamp-micros")
+  long finishTime;
+}
+```
 
 ### References to Named Schemata
 If a named schema has already been defined in the same Avro IDL file, it may be referenced by name as if it were a primitive type:
