@@ -1,6 +1,6 @@
 ---
-title: "Security policy"
-linkTitle: "Security policy"
+title: "Security"
+linkTitle: "Security"
 weight: 3
 ---
 
