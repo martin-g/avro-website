@@ -104,18 +104,6 @@
 				
 				
 				
-				<a class="nav-link" href="/docs/" ><span>Documentation</span></a>
-			</li>
-			
-			<li class="nav-item mr-4 mb-2 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				
-				
 				<a class="nav-link active" href="/blog/" ><span class="active">Blog</span></a>
 			</li>
 			
@@ -131,7 +119,37 @@
 				<a class="nav-link" href="/community/" ><span>Community</span></a>
 			</li>
 			
-			
+			<li class="nav-item dropdown mr-4 d-none d-lg-block">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	Documentation
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/docs/1.11.0/">1.11.0</a>
+	
+	<a class="dropdown-item" href="/docs/1.10.2/">1.10.2</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.10.1/">1.10.1</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.10.0/">1.10.0</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.9.2/">1.9.2</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.9.1/">1.9.1</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.9.0/">1.9.0</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.8.2/">1.8.2</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.8.1/">1.8.1</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.8.0/">1.8.0</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.7.7/">1.7.7</a>
+	
+</div>
+
+			</li>
 			
 		</ul>
 	</div>
@@ -146,7 +164,7 @@
   aria-label="Search this site…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.f7b4641156bbf2a89be43a76cba72476.json"
+  data-offline-search-index-json-src="/offline-search-index.213b2e5be70039940e505625086a46a8.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -174,7 +192,7 @@
   aria-label="Search this site…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.f7b4641156bbf2a89be43a76cba72476.json"
+  data-offline-search-index-json-src="/offline-search-index.213b2e5be70039940e505625086a46a8.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -185,95 +203,175 @@
   </form>
   </div>
   <div id="content-desktop"></div>
-  <nav class="collapse td-sidebar-nav" id="td-section-nav">
+  <nav class="collapse td-sidebar-nav foldable-nav" id="td-section-nav">
     <ul class="td-sidebar-nav__section pr-md-3 ul-0">
       <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-blog-li">
   <a href="/blog/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-blog"><span class="">Blog</span></a>
   <ul class="ul-1">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-blognews-li">
-  <a href="/blog/news/" title="News About Apache Avro" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-blognews"><span class="">News</span></a>
+  <input type="checkbox" id="m-blognews-check"/>
+  <label for="m-blognews-check"><a href="/blog/news/" title="News About Apache Avro" class="align-left pl-0  td-sidebar-link td-sidebar-link__section" id="m-blognews"><span class="">News</span></a></label>
+  
   <ul class="ul-2 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20211005new-committer-david-mollitor-li">
-  <a href="/blog/2021/10/05/new-committer-david-mollitor/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20211005new-committer-david-mollitor"><span class="">New committer: David Mollitor</span></a>
+  <input type="checkbox" id="m-blog20211005new-committer-david-mollitor-check"/>
+  <label for="m-blog20211005new-committer-david-mollitor-check"><a href="/blog/2021/10/05/new-committer-david-mollitor/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20211005new-committer-david-mollitor"><span class="">New committer: David Mollitor</span></a></label>
+  
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-blogreleases-li">
-  <a href="/blog/releases/" title="New Releases" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-blogreleases"><span class="">Releases</span></a>
+  <input type="checkbox" id="m-blogreleases-check" checked/>
+  <label for="m-blogreleases-check"><a href="/blog/releases/" title="New Releases" class="align-left pl-0  td-sidebar-link td-sidebar-link__section" id="m-blogreleases"><span class="">Releases</span></a></label>
+  
   <ul class="ul-2 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20211031avro-1110-li">
-  <a href="/blog/2021/10/31/avro-1.11.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20211031avro-1110"><span class="">Avro 1.11.0</span></a>
+  <input type="checkbox" id="m-blog20211031avro-1110-check"/>
+  <label for="m-blog20211031avro-1110-check"><a href="/blog/2021/10/31/avro-1.11.0/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20211031avro-1110"><span class="">Avro 1.11.0</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20210315avro-1102-li">
-  <a href="/blog/2021/03/15/avro-1.10.2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20210315avro-1102"><span class="">Avro 1.10.2</span></a>
+  <input type="checkbox" id="m-blog20210315avro-1102-check"/>
+  <label for="m-blog20210315avro-1102-check"><a href="/blog/2021/03/15/avro-1.10.2/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20210315avro-1102"><span class="">Avro 1.10.2</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20201203avro-1101-li">
-  <a href="/blog/2020/12/03/avro-1.10.1/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20201203avro-1101"><span class="">Avro 1.10.1</span></a>
+  <input type="checkbox" id="m-blog20201203avro-1101-check"/>
+  <label for="m-blog20201203avro-1101-check"><a href="/blog/2020/12/03/avro-1.10.1/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20201203avro-1101"><span class="">Avro 1.10.1</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20200629avro-1100-li">
-  <a href="/blog/2020/06/29/avro-1.10.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20200629avro-1100"><span class="">Avro 1.10.0</span></a>
+  <input type="checkbox" id="m-blog20200629avro-1100-check"/>
+  <label for="m-blog20200629avro-1100-check"><a href="/blog/2020/06/29/avro-1.10.0/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20200629avro-1100"><span class="">Avro 1.10.0</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20200219avro-192-li">
-  <a href="/blog/2020/02/19/avro-1.9.2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20200219avro-192"><span class="">Avro 1.9.2</span></a>
+  <input type="checkbox" id="m-blog20200219avro-192-check"/>
+  <label for="m-blog20200219avro-192-check"><a href="/blog/2020/02/19/avro-1.9.2/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20200219avro-192"><span class="">Avro 1.9.2</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20190902avro-191-li">
-  <a href="/blog/2019/09/02/avro-1.9.1/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20190902avro-191"><span class="">Avro 1.9.1</span></a>
+  <input type="checkbox" id="m-blog20190902avro-191-check"/>
+  <label for="m-blog20190902avro-191-check"><a href="/blog/2019/09/02/avro-1.9.1/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20190902avro-191"><span class="">Avro 1.9.1</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20190514avro-190-li">
-  <a href="/blog/2019/05/14/avro-1.9.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20190514avro-190"><span class="">Avro 1.9.0</span></a>
+  <input type="checkbox" id="m-blog20190514avro-190-check"/>
+  <label for="m-blog20190514avro-190-check"><a href="/blog/2019/05/14/avro-1.9.0/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20190514avro-190"><span class="">Avro 1.9.0</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20170520avro-182-li">
-  <a href="/blog/2017/05/20/avro-1.8.2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20170520avro-182"><span class="">Avro 1.8.2</span></a>
+  <input type="checkbox" id="m-blog20170520avro-182-check"/>
+  <label for="m-blog20170520avro-182-check"><a href="/blog/2017/05/20/avro-1.8.2/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20170520avro-182"><span class="">Avro 1.8.2</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20160519avro-181-li">
-  <a href="/blog/2016/05/19/avro-1.8.1/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20160519avro-181"><span class="">Avro 1.8.1</span></a>
+  <input type="checkbox" id="m-blog20160519avro-181-check"/>
+  <label for="m-blog20160519avro-181-check"><a href="/blog/2016/05/19/avro-1.8.1/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20160519avro-181"><span class="">Avro 1.8.1</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20160129avro-180-li">
-  <a href="/blog/2016/01/29/avro-1.8.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20160129avro-180"><span class="">Avro 1.8.0</span></a>
+  <input type="checkbox" id="m-blog20160129avro-180-check"/>
+  <label for="m-blog20160129avro-180-check"><a href="/blog/2016/01/29/avro-1.8.0/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20160129avro-180"><span class="">Avro 1.8.0</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20140723avro-177-li">
-  <a href="/blog/2014/07/23/avro-1.7.7/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20140723avro-177"><span class="">Avro 1.7.7</span></a>
+  <input type="checkbox" id="m-blog20140723avro-177-check"/>
+  <label for="m-blog20140723avro-177-check"><a href="/blog/2014/07/23/avro-1.7.7/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20140723avro-177"><span class="">Avro 1.7.7</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20140122avro-176-li">
-  <a href="/blog/2014/01/22/avro-1.7.6/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20140122avro-176"><span class="">Avro 1.7.6</span></a>
+  <input type="checkbox" id="m-blog20140122avro-176-check"/>
+  <label for="m-blog20140122avro-176-check"><a href="/blog/2014/01/22/avro-1.7.6/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20140122avro-176"><span class="">Avro 1.7.6</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20130819avro-175-li">
-  <a href="/blog/2013/08/19/avro-1.7.5/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20130819avro-175"><span class="">Avro 1.7.5</span></a>
+  <input type="checkbox" id="m-blog20130819avro-175-check"/>
+  <label for="m-blog20130819avro-175-check"><a href="/blog/2013/08/19/avro-1.7.5/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20130819avro-175"><span class="">Avro 1.7.5</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20130226avro-174-li">
-  <a href="/blog/2013/02/26/avro-1.7.4/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20130226avro-174"><span class="">Avro 1.7.4</span></a>
+  <input type="checkbox" id="m-blog20130226avro-174-check"/>
+  <label for="m-blog20130226avro-174-check"><a href="/blog/2013/02/26/avro-1.7.4/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20130226avro-174"><span class="">Avro 1.7.4</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20121207avro-173-li">
-  <a href="/blog/2012/12/07/avro-1.7.3/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20121207avro-173"><span class="">Avro 1.7.3</span></a>
+  <input type="checkbox" id="m-blog20121207avro-173-check"/>
+  <label for="m-blog20121207avro-173-check"><a href="/blog/2012/12/07/avro-1.7.3/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20121207avro-173"><span class="">Avro 1.7.3</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20120925avro-172-li">
-  <a href="/blog/2012/09/25/avro-1.7.2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20120925avro-172"><span class="">Avro 1.7.2</span></a>
+  <input type="checkbox" id="m-blog20120925avro-172-check"/>
+  <label for="m-blog20120925avro-172-check"><a href="/blog/2012/09/25/avro-1.7.2/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20120925avro-172"><span class="">Avro 1.7.2</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20120718avro-171-li">
-  <a href="/blog/2012/07/18/avro-1.7.1/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20120718avro-171"><span class="">Avro 1.7.1</span></a>
+  <input type="checkbox" id="m-blog20120718avro-171-check"/>
+  <label for="m-blog20120718avro-171-check"><a href="/blog/2012/07/18/avro-1.7.1/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20120718avro-171"><span class="">Avro 1.7.1</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20120611avro-170-li">
-  <a href="/blog/2012/06/11/avro-1.7.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20120611avro-170"><span class="">Avro 1.7.0</span></a>
+  <input type="checkbox" id="m-blog20120611avro-170-check"/>
+  <label for="m-blog20120611avro-170-check"><a href="/blog/2012/06/11/avro-1.7.0/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20120611avro-170"><span class="">Avro 1.7.0</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20120319avro-163-li">
-  <a href="/blog/2012/03/19/avro-1.6.3/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20120319avro-163"><span class="">Avro 1.6.3</span></a>
+  <input type="checkbox" id="m-blog20120319avro-163-check"/>
+  <label for="m-blog20120319avro-163-check"><a href="/blog/2012/03/19/avro-1.6.3/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20120319avro-163"><span class="">Avro 1.6.3</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20120214avro-162-li">
-  <a href="/blog/2012/02/14/avro-1.6.2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20120214avro-162"><span class="">Avro 1.6.2</span></a>
+  <input type="checkbox" id="m-blog20120214avro-162-check"/>
+  <label for="m-blog20120214avro-162-check"><a href="/blog/2012/02/14/avro-1.6.2/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20120214avro-162"><span class="">Avro 1.6.2</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20111114avro-161-li">
-  <a href="/blog/2011/11/14/avro-1.6.1/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20111114avro-161"><span class="">Avro 1.6.1</span></a>
+  <input type="checkbox" id="m-blog20111114avro-161-check"/>
+  <label for="m-blog20111114avro-161-check"><a href="/blog/2011/11/14/avro-1.6.1/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20111114avro-161"><span class="">Avro 1.6.1</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20111102avro-160-li">
-  <a href="/blog/2011/11/02/avro-1.6.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20111102avro-160"><span class="">Avro 1.6.0</span></a>
+  <input type="checkbox" id="m-blog20111102avro-160-check"/>
+  <label for="m-blog20111102avro-160-check"><a href="/blog/2011/11/02/avro-1.6.0/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20111102avro-160"><span class="">Avro 1.6.0</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20110912avro-154-li">
-  <a href="/blog/2011/09/12/avro-1.5.4/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20110912avro-154"><span class="">Avro 1.5.4</span></a>
+  <input type="checkbox" id="m-blog20110912avro-154-check"/>
+  <label for="m-blog20110912avro-154-check"><a href="/blog/2011/09/12/avro-1.5.4/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20110912avro-154"><span class="">Avro 1.5.4</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20110829avro-153-li">
-  <a href="/blog/2011/08/29/avro-1.5.3/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20110829avro-153"><span class="">Avro 1.5.3</span></a>
+  <input type="checkbox" id="m-blog20110829avro-153-check"/>
+  <label for="m-blog20110829avro-153-check"><a href="/blog/2011/08/29/avro-1.5.3/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20110829avro-153"><span class="">Avro 1.5.3</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20110812avro-152-li">
-  <a href="/blog/2011/08/12/avro-1.5.2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20110812avro-152"><span class="">Avro 1.5.2</span></a>
+  <input type="checkbox" id="m-blog20110812avro-152-check"/>
+  <label for="m-blog20110812avro-152-check"><a href="/blog/2011/08/12/avro-1.5.2/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20110812avro-152"><span class="">Avro 1.5.2</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20110506avro-151-li">
-  <a href="/blog/2011/05/06/avro-1.5.1/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20110506avro-151"><span class="">Avro 1.5.1</span></a>
+  <input type="checkbox" id="m-blog20110506avro-151-check"/>
+  <label for="m-blog20110506avro-151-check"><a href="/blog/2011/05/06/avro-1.5.1/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20110506avro-151"><span class="">Avro 1.5.1</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20110311avro-150-li">
-  <a href="/blog/2011/03/11/avro-1.5.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20110311avro-150"><span class="">Avro 1.5.0</span></a>
+  <input type="checkbox" id="m-blog20110311avro-150-check"/>
+  <label for="m-blog20110311avro-150-check"><a href="/blog/2011/03/11/avro-1.5.0/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20110311avro-150"><span class="">Avro 1.5.0</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20101013avro-141-li">
-  <a href="/blog/2010/10/13/avro-1.4.1/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20101013avro-141"><span class="">Avro 1.4.1</span></a>
+  <input type="checkbox" id="m-blog20101013avro-141-check"/>
+  <label for="m-blog20101013avro-141-check"><a href="/blog/2010/10/13/avro-1.4.1/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20101013avro-141"><span class="">Avro 1.4.1</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20100908avro-140-li">
-  <a href="/blog/2010/09/08/avro-1.4.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20100908avro-140"><span class="">Avro 1.4.0</span></a>
+  <input type="checkbox" id="m-blog20100908avro-140-check"/>
+  <label for="m-blog20100908avro-140-check"><a href="/blog/2010/09/08/avro-1.4.0/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20100908avro-140"><span class="">Avro 1.4.0</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20100715avro-100-li">
-  <a href="/blog/2010/07/15/avro-1.0.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20100715avro-100"><span class="">Avro 1.0.0</span></a>
+  <input type="checkbox" id="m-blog20100715avro-100-check"/>
+  <label for="m-blog20100715avro-100-check"><a href="/blog/2010/07/15/avro-1.0.0/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20100715avro-100"><span class="">Avro 1.0.0</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20100707avro-133-li">
-  <a href="/blog/2010/07/07/avro-1.3.3/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20100707avro-133"><span class="">Avro 1.3.3</span></a>
+  <input type="checkbox" id="m-blog20100707avro-133-check"/>
+  <label for="m-blog20100707avro-133-check"><a href="/blog/2010/07/07/avro-1.3.3/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20100707avro-133"><span class="">Avro 1.3.3</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20100410avro-100-li">
-  <a href="/blog/2010/04/10/avro-1.0.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20100410avro-100"><span class="">Avro 1.0.0</span></a>
+  <input type="checkbox" id="m-blog20100410avro-100-check"/>
+  <label for="m-blog20100410avro-100-check"><a href="/blog/2010/04/10/avro-1.0.0/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20100410avro-100"><span class="">Avro 1.0.0</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20100331avro-132-li">
-  <a href="/blog/2010/03/31/avro-1.3.2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20100331avro-132"><span class="">Avro 1.3.2</span></a>
+  <input type="checkbox" id="m-blog20100331avro-132-check"/>
+  <label for="m-blog20100331avro-132-check"><a href="/blog/2010/03/31/avro-1.3.2/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20100331avro-132"><span class="">Avro 1.3.2</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20100319avro-131-li">
-  <a href="/blog/2010/03/19/avro-1.3.1/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20100319avro-131"><span class="">Avro 1.3.1</span></a>
+  <input type="checkbox" id="m-blog20100319avro-131-check"/>
+  <label for="m-blog20100319avro-131-check"><a href="/blog/2010/03/19/avro-1.3.1/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20100319avro-131"><span class="">Avro 1.3.1</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20100226avro-130-li">
-  <a href="/blog/2010/02/26/avro-1.3.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20100226avro-130"><span class="">Avro 1.3.0</span></a>
+  <input type="checkbox" id="m-blog20100226avro-130-check"/>
+  <label for="m-blog20100226avro-130-check"><a href="/blog/2010/02/26/avro-1.3.0/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20100226avro-130"><span class="">Avro 1.3.0</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-blog20091015avro-120-li">
-  <a href="/blog/2009/10/15/avro-1.2.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-blog20091015avro-120"><span class="">Avro 1.2.0</span></a>
+  <input type="checkbox" id="m-blog20091015avro-120-check"/>
+  <label for="m-blog20091015avro-120-check"><a href="/blog/2009/10/15/avro-1.2.0/" class="align-left pl-0  td-sidebar-link td-sidebar-link__page" id="m-blog20091015avro-120"><span class="">Avro 1.2.0</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-blog20090915avro-110-li">
-  <a href="/blog/2009/09/15/avro-1.1.0/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-blog20090915avro-110"><span class="td-sidebar-nav-active-item">Avro 1.1.0</span></a>
+  <input type="checkbox" id="m-blog20090915avro-110-check" checked/>
+  <label for="m-blog20090915avro-110-check"><a href="/blog/2009/09/15/avro-1.1.0/" class="align-left pl-0  active td-sidebar-link td-sidebar-link__page" id="m-blog20090915avro-110"><span class="td-sidebar-nav-active-item">Avro 1.1.0</span></a></label>
+  
 </li>
   </ul>
 </li>
@@ -343,9 +441,9 @@
       
       <ul class="taxonomy-terms">
         
-          <li><a class="taxonomy-term" href="/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">java</span><span class="taxonomy-count">1</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">java</span><span class="taxonomy-count">2</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">1</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">2</span></a></li>
         
       </ul>
     </div>

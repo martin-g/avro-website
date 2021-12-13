@@ -4,7 +4,7 @@
   
   <url>
     <loc>/project/download/</loc>
-    <lastmod>2021-10-27T21:31:53+03:00</lastmod>
+    <lastmod>2021-11-02T10:38:14+02:00</lastmod>
   </url>
   
   <url>
@@ -18,13 +18,23 @@
   </url>
   
   <url>
-    <loc>/docs/getting-started-java/</loc>
-    <lastmod>2021-10-26T22:13:48+03:00</lastmod>
+    <loc>/docs/1.10.2/getting-started-java/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
-    <loc>/docs/getting-started-python/</loc>
-    <lastmod>2021-10-26T22:13:48+03:00</lastmod>
+    <loc>/docs/1.11.0/getting-started-java/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/1.10.2/getting-started-python/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/1.11.0/getting-started-python/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
@@ -43,23 +53,43 @@
   </url>
   
   <url>
-    <loc>/docs/specification/</loc>
-    <lastmod>2021-10-28T11:11:36+03:00</lastmod>
+    <loc>/docs/1.10.2/specification/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
-    <loc>/docs/java-api/</loc>
-    <lastmod>2021-10-25T16:29:35+03:00</lastmod>
+    <loc>/docs/1.11.0/specification/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
-    <loc>/docs/c-api/</loc>
-    <lastmod>2021-10-28T10:20:26+03:00</lastmod>
+    <loc>/docs/1.10.2/java-api/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
-    <loc>/docs/c&#43;&#43;-api/</loc>
-    <lastmod>2021-10-28T10:20:26+03:00</lastmod>
+    <loc>/docs/1.11.0/java-api/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/1.10.2/c-api/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/1.11.0/c-api/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/1.10.2/c&#43;&#43;-api/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/1.11.0/c&#43;&#43;-api/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
@@ -68,8 +98,13 @@
   </url>
   
   <url>
-    <loc>/docs/csharp-api/</loc>
-    <lastmod>2021-10-28T10:25:46+03:00</lastmod>
+    <loc>/docs/1.10.2/csharp-api/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/1.11.0/csharp-api/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
@@ -78,8 +113,13 @@
   </url>
   
   <url>
-    <loc>/docs/mapreduce-guide/</loc>
-    <lastmod>2021-10-26T22:13:48+03:00</lastmod>
+    <loc>/docs/1.10.2/mapreduce-guide/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/1.11.0/mapreduce-guide/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
@@ -88,23 +128,43 @@
   </url>
   
   <url>
-    <loc>/docs/idl-language/</loc>
-    <lastmod>2021-10-25T22:33:47+03:00</lastmod>
+    <loc>/docs/1.10.2/idl-language/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
-    <loc>/docs/sasl-profile/</loc>
-    <lastmod>2021-10-25T22:40:35+03:00</lastmod>
+    <loc>/docs/1.11.0/idl-language/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
-    <loc>/docs/contribution-guidelines/</loc>
-    <lastmod>2021-10-26T23:01:27+03:00</lastmod>
+    <loc>/docs/1.10.2/sasl-profile/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
-    <loc>/docs/</loc>
-    <lastmod>2021-10-25T10:40:24+03:00</lastmod>
+    <loc>/docs/1.11.0/sasl-profile/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/1.11.0/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/1.10.2/contribution-guidelines/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/1.11.0/contribution-guidelines/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/docs/1.10.2/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
@@ -119,7 +179,7 @@
   
   <url>
     <loc>/blog/2021/10/31/avro-1.11.0/</loc>
-    <lastmod>2021-10-27T18:25:30+03:00</lastmod>
+    <lastmod>2021-11-02T10:38:14+02:00</lastmod>
   </url>
   
   <url>
@@ -327,13 +387,18 @@
   </url>
   
   <url>
+    <loc>/docs/</loc>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tags/java/</loc>
-    <lastmod>2021-10-26T22:13:48+03:00</lastmod>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/python/</loc>
-    <lastmod>2021-10-26T22:13:48+03:00</lastmod>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
   <url>
@@ -343,7 +408,7 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2021-10-26T22:13:48+03:00</lastmod>
+    <lastmod>2021-12-13T12:24:13+02:00</lastmod>
   </url>
   
 </urlset>

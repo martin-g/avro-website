@@ -114,18 +114,6 @@ Netflix …">
 				
 				
 				
-				<a class="nav-link" href="/docs/" ><span>Documentation</span></a>
-			</li>
-			
-			<li class="nav-item mr-4 mb-2 mb-lg-0">
-				
-				
-				
-				
-				
-				
-				
-				
 				<a class="nav-link" href="/blog/" ><span>Blog</span></a>
 			</li>
 			
@@ -141,7 +129,37 @@ Netflix …">
 				<a class="nav-link" href="/community/" ><span>Community</span></a>
 			</li>
 			
-			
+			<li class="nav-item dropdown mr-4 d-none d-lg-block">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	Documentation
+</a>
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	
+	<a class="dropdown-item" href="/docs/1.11.0/">1.11.0</a>
+	
+	<a class="dropdown-item" href="/docs/1.10.2/">1.10.2</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.10.1/">1.10.1</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.10.0/">1.10.0</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.9.2/">1.9.2</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.9.1/">1.9.1</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.9.0/">1.9.0</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.8.2/">1.8.2</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.8.1/">1.8.1</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.8.0/">1.8.0</a>
+	
+	<a class="dropdown-item" href="https://avro.apache.org/docs/1.7.7/">1.7.7</a>
+	
+</div>
+
+			</li>
 			
 		</ul>
 	</div>
@@ -156,7 +174,7 @@ Netflix …">
   aria-label="Search this site…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.f7b4641156bbf2a89be43a76cba72476.json"
+  data-offline-search-index-json-src="/offline-search-index.213b2e5be70039940e505625086a46a8.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -184,7 +202,7 @@ Netflix …">
   aria-label="Search this site…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.f7b4641156bbf2a89be43a76cba72476.json"
+  data-offline-search-index-json-src="/offline-search-index.213b2e5be70039940e505625086a46a8.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -195,27 +213,43 @@ Netflix …">
   </form>
   </div>
   <div id="content-desktop"></div>
-  <nav class="collapse td-sidebar-nav" id="td-section-nav">
+  <nav class="collapse td-sidebar-nav foldable-nav" id="td-section-nav">
     <ul class="td-sidebar-nav__section pr-md-3 ul-0">
       <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-project-li">
   <a href="/project/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-project"><span class="">Project</span></a>
   <ul class="ul-1">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-projectdownload-li">
-  <a href="/project/download/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-projectdownload"><span class="">Download</span></a>
+  <input type="checkbox" id="m-projectdownload-check"/>
+  <label for="m-projectdownload-check"><a href="/project/download/" class="align-left pl-0  td-sidebar-link td-sidebar-link__section" id="m-projectdownload"><span class="">Download</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-projectcredits-li">
-  <a href="/project/credits/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__section" id="m-projectcredits"><span class="td-sidebar-nav-active-item">Credits</span></a>
+  <input type="checkbox" id="m-projectcredits-check" checked/>
+  <label for="m-projectcredits-check"><a href="/project/credits/" class="align-left pl-0  active td-sidebar-link td-sidebar-link__section" id="m-projectcredits"><span class="td-sidebar-nav-active-item">Credits</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-projectlicense-li">
-  <a href="/project/license/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-projectlicense"><span class="">License</span></a>
+  <input type="checkbox" id="m-projectlicense-check"/>
+  <label for="m-projectlicense-check"><a href="/project/license/" class="align-left pl-0  td-sidebar-link td-sidebar-link__section" id="m-projectlicense"><span class="">License</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-projectprivacy-policy-li">
-  <a href="/project/privacy-policy/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-projectprivacy-policy"><span class="">Privacy policy</span></a>
+  <input type="checkbox" id="m-projectprivacy-policy-check"/>
+  <label for="m-projectprivacy-policy-check"><a href="/project/privacy-policy/" class="align-left pl-0  td-sidebar-link td-sidebar-link__section" id="m-projectprivacy-policy"><span class="">Privacy policy</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-projectsecurity-li">
-  <a href="/project/security/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-projectsecurity"><span class="">Security policy</span></a>
+  <input type="checkbox" id="m-projectsecurity-check"/>
+  <label for="m-projectsecurity-check"><a href="/project/security/" class="align-left pl-0  td-sidebar-link td-sidebar-link__section" id="m-projectsecurity"><span class="">Security policy</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-projectevents-li">
-  <a href="/project/events/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-projectevents"><span class="">Events</span></a>
+  <input type="checkbox" id="m-projectevents-check"/>
+  <label for="m-projectevents-check"><a href="/project/events/" class="align-left pl-0  td-sidebar-link td-sidebar-link__section" id="m-projectevents"><span class="">Events</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-projectdonate-li">
-  <a href="/project/donate/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-projectdonate"><span class="">Donate</span></a>
+  <input type="checkbox" id="m-projectdonate-check"/>
+  <label for="m-projectdonate-check"><a href="/project/donate/" class="align-left pl-0  td-sidebar-link td-sidebar-link__section" id="m-projectdonate"><span class="">Donate</span></a></label>
+  
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-projectthanks-li">
-  <a href="/project/thanks/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-projectthanks"><span class="">Thanks</span></a>
+  <input type="checkbox" id="m-projectthanks-check"/>
+  <label for="m-projectthanks-check"><a href="/project/thanks/" class="align-left pl-0  td-sidebar-link td-sidebar-link__section" id="m-projectthanks"><span class="">Thanks</span></a></label>
+  
 </li>
   </ul>
 </li>
@@ -295,9 +329,9 @@ Netflix …">
       
       <ul class="taxonomy-terms">
         
-          <li><a class="taxonomy-term" href="/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">java</span><span class="taxonomy-count">1</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/java/" data-taxonomy-term="java"><span class="taxonomy-label">java</span><span class="taxonomy-count">2</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">1</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/python/" data-taxonomy-term="python"><span class="taxonomy-label">python</span><span class="taxonomy-count">2</span></a></li>
         
       </ul>
     </div>
