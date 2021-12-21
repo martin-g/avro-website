@@ -198,13 +198,27 @@ Array types are written in a manner that will seem familiar to C++ or Java progr
 Map types are written similarly to array types. An array that contains values of type t is written `map<t>`. As in the JSON schema format, all maps contain `string`-type keys.
 
 #### Unions
-Union types are denoted as `union { typeA, typeB, typeC, ... }`. For example, this record contains a string field that is optional (unioned with null):
+Union types are denoted as `union { typeA, typeB, typeC, ... }`. For example, this record contains a string field that is optional (unioned with null), and a field containing either a precise or a imprecise number:
 ```java
 record RecordWithUnion {
   union { null, string } optionalString;
+  union { decimal(12, 6), float } number;
 }
 ```
-Note that the same restrictions apply to Avro IDL unions as apply to unions defined in the JSON format; namely, a record may not contain multiple elements of the same type.
+Note that the same restrictions apply to Avro IDL unions as apply to unions defined in the JSON format; namely, a record may not contain multiple elements of the same type. Also, fields/parameters that use the union type and have a default parameter must specify a default value of the same type as the **first** union type.
+
+Because it occurs so often, there is a special shorthand to denote a union of `null` with another type. In the following snippet, the first three fields have identical types:
+
+```java
+record RecordWithUnion {
+  union { null, string } optionalString1 = null;
+  string? optionalString2 = null;
+  string? optionalString3; // No default value
+  string? optionalString4 = "something";
+}
+```
+
+Note that unlike explicit unions, the position of the `null` type is fluid; it will be the first or last type depending on the default value (if any). So in the example above, all fields are valid.
 
 ## Defining RPC Messages
 The syntax to define an RPC message within a Avro IDL protocol is similar to the syntax for a method declaration within a C header file or a Java interface. To define an RPC message add which takes two arguments named _foo_ and _bar_, returning an _int_, simply include the following definition within the protocol:
