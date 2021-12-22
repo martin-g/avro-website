@@ -20,21 +20,50 @@ If you want to do SCSS edits and want to publish these, you need to install `Pos
 npm install
 ```
 
-## Running the website locally
+## Work flow
 
-Building and running the site locally requires a recent `extended` version of [Hugo](https://gohugo.io).
+1. Building and running the site locally requires a recent `extended` version of [Hugo](https://gohugo.io).
 You can find out more about how to install Hugo for your environment in our
 [Getting started](https://www.docsy.dev/docs/getting-started/#prerequisites-and-installation) guide.
-
 Once you've made your working copy of the site repo, from the repo root folder, run:
 
-```
-hugo server --navigateToChanged
-```
+    
+   ```
+   hugo server --navigateToChanged
+   ```
+   
+1. Edit .md and .html files in `content/` folder
+1. Once satisfied with the changes, commit them: 
+   
+   ```
+   git commit -a
+   ```
+
+1. Generate the HTML filse
+stop `hugo server --navigateToChanged` (with Ctrl+C) and run 
+
+   ```
+   hugo
+   ```
+   
+    This will generate the HTMLs in `public/` folder and this is actually what is being deployed
+
+1. Add the modified HTML files to Git
+    
+   ```
+   git add .
+   git rm offline-search-index.<<OLD-HASH>>.json
+   git commit -a
+   git push
+   ```
+
+
+This way even when the PR modifies a lot of files we can review only the first commit, the meaningful one, with the modified files in `content/` folder
+
 
 ## Running a container locally
 
-You can run avro-website inside a [Docker](https://docs.docker.com/)
+You can also run avro-website inside a [Docker](https://docs.docker.com/)
 container, the container runs with a volume bound to the `avro-website`
 folder. This approach doesn't require you to install any dependencies other
 than [Docker Desktop](https://www.docker.com/products/docker-desktop) on
