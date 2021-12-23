@@ -1,7 +1,7 @@
 
 ---
 title: "Documentation (1.11.0)"
-linkTitle: "1.11.0"
+linkTitle: "Current (1.11.0)"
 type: docs
 weight: 10
 ---

@@ -221,38 +221,38 @@ enable = true
 
 [[params.versions]]
   version = "1.10.1"
-  url = "https://avro.apache.org/docs/1.10.1/"
+  url = "/docs/1.10.1/"
 
 [[params.versions]]
   version = "1.10.0"
-  url = "https://avro.apache.org/docs/1.10.0/"
+  url = "/docs/1.10.0/"
 
 [[params.versions]]
   version = "1.9.2"
-  url = "https://avro.apache.org/docs/1.9.2/"
+  url = "/docs/1.9.2/"
 
 [[params.versions]]
   version = "1.9.1"
-  url = "https://avro.apache.org/docs/1.9.1/"
+  url = "/docs/1.9.1/"
 
 [[params.versions]]
   version = "1.9.0"
-  url = "https://avro.apache.org/docs/1.9.0/"
+  url = "/docs/1.9.0/"
 
 
 [[params.versions]]
   version = "1.8.2"
-  url = "https://avro.apache.org/docs/1.8.2/"
+  url = "/docs/1.8.2/"
 
 [[params.versions]]
   version = "1.8.1"
-  url = "https://avro.apache.org/docs/1.8.1/"
+  url = "/docs/1.8.1/"
 
 [[params.versions]]
   version = "1.8.0"
-  url = "https://avro.apache.org/docs/1.8.0/"
+  url = "/docs/1.8.0/"
 
 
 [[params.versions]]
   version = "1.7.7"
-  url = "https://avro.apache.org/docs/1.7.7/"
+  url = "/docs/1.7.7/"
