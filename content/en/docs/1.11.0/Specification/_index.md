@@ -43,16 +43,16 @@ Primitive type names are also defined type names. Thus, for example, the schema 
 Avro supports six kinds of complex types: _records_, _enums_, _arrays_, _maps_, _unions_ and _fixed_.
 
 ### Records {#schema-record}
-Records use the type name "record" and support three attributes:
+Records use the type name "record" and support the following attributes:
 
 * _name_: a JSON string providing the name of the record (required).
-* _namespace_, a JSON string that qualifies the name;
+* _namespace_, a JSON string that qualifies the name (optional);
 * _doc_: a JSON string providing documentation to the user of this schema (optional).
 * _aliases_: a JSON array of strings, providing alternate names for this record (optional).
 * _fields_: a JSON array, listing fields (required). Each field is a JSON object with the following attributes:
   * _name_: a JSON string providing the name of the field (required), and
   * _doc_: a JSON string describing this field for users (optional).
-  * _type_: a [schema]({{< ref "#schema-declaration" >}} "Schema declaration"), as defined above
+  * _type_: a [schema]({{< ref "#schema-declaration" >}} "Schema declaration", required), as defined above
   * _default_: A default value for this field, only used when reading instances that lack the field for schema evolution purposes. The presence of a default value does not make the field optional at encoding time. Permitted values depend on the field's schema type, according to the table below. Default values for union fields correspond to the first schema in the union. Default values for bytes and fixed fields are JSON strings, where Unicode code points 0-255 are mapped to unsigned 8-bit byte values 0-255. Avro encodes a field even if its value is equal to its default.
 
 *field default values*
@@ -90,7 +90,7 @@ For example, a linked-list of 64-bit values may be defined with:
 Enums use the type name "enum" and support the following attributes:
 
 * _name_: a JSON string providing the name of the enum (required).
-* _namespace_, a JSON string that qualifies the name;
+* _namespace_, a JSON string that qualifies the name (optional);
 * _aliases_: a JSON array of strings, providing alternate names for this enum (optional).
 * _doc_: a JSON string providing documentation to the user of this schema (optional).
 * _symbols_: a JSON array, listing symbols, as JSON strings (required). All symbols in an enum must be unique; duplicates are prohibited. Every symbol must match the regular expression [A-Za-z_][A-Za-z0-9_]* (the same requirement as for [names]({{< ref "#names" >}} "Names")).
@@ -138,7 +138,7 @@ For example, a map from string to long is declared with:
 ### Unions
 Unions, as mentioned above, are represented using JSON arrays. For example, ["null", "string"] declares a schema which may be either a null or string.
 
-(Note that when a [default value]({{< ref "#schema-record" >}} "Schema record") is specified for a record field whose type is a union, the type of the default value must match the first element of the union. Thus, for unions containing "null", the "null" is usually listed first, since the default value of such unions is typically null.)
+(Note that when a [default value]({{< ref "#schema-record" >}} "Schema record") is specified for a record field whose type is a union, the type of the default value must match the _first_ element of the union. Thus, for unions containing "null", the "null" is usually listed first, since the default value of such unions is typically null.)
 
 Unions may not contain more than one schema with the same type, except for the named types record, fixed and enum. For example, unions containing two array types or two map types are not permitted, but two types with different names are permitted. (Names permit efficient resolution when reading and writing unions.)
 
@@ -158,7 +158,7 @@ For example, 16-byte quantity may be declared with:
 ```
 
 ### Names {#names}
-Record, enums and fixed are named types. Each has a fullname that is composed of two parts; a name and a namespace. Equality of names is defined on the fullname.
+Record, enums and fixed are named types. Each has a _fullname_ that is composed of two parts; a _name_ and a _namespace_. Equality of names is defined on the fullname.
 
 The name portion of a fullname, record field names, and enum symbols must:
 
@@ -172,11 +172,59 @@ The null namespace may not be used in a dot-separated sequence of names. So the 
   <empty> | <name>[(<dot><name>)*]
 ```
 
-In record, enum and fixed definitions, the fullname is determined in one of the following ways:
+In record, enum and fixed definitions, the fullname is determined according to the algorithm below the example:
+```json
+{
+  "type": "record",
+  "name": "Example",
+  "doc": "A simple name (attribute) and no namespace attribute: use the null namespace (\"\"); the fullname is 'Example'.",
+  "fields": [
+    {
+      "name": "inheritNull",
+      "type": {
+        "type": "enum",
+        "name": "Simple",
+        "doc": "A simple name (attribute) and no namespace attribute: inherit the null namespace of the enclosing type 'Example'. The fullname is 'Simple'.",
+        "symbols": ["a", "b"]
+      }
+    }, {
+      "name": "explicitNamespace",
+      "type": {
+        "type": "fixed",
+        "name": "simple",
+        "namespace": "explicit",
+        "doc": "A simple name (attribute) and a namespace (attribute); the fullname is 'explicit.Simple' (this is a different type than of the 'inheritNull' field)",
+        "size": 12
+      }
+    }, {
+      "name": "fullName",
+      "type": {
+        "type": "record",
+        "name": "a.full.Name",
+        "namespace": "ignored",
+        "doc": "A name attribute with a fullname, so the namespace attribute is ignored. The fullname is 'a.full.Name', and the namespace is 'a.full'.",
+        "fields": [
+          {
+            "name": "inheritNamespace",
+            "type": {
+              "type": "enum",
+              "name": "Understanding",
+              "doc": "A simple name (attribute) and no namespace attribute: inherit the namespace of the enclosing type 'a.full.Name'. The fullname is 'a.full.Understanding'.",
+              "symbols": ["d", "e"]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+```
 
-* A name and namespace are both specified. For example, one might use "name": "X", "namespace": "org.foo" to indicate the fullname org.foo.X.
-* A fullname is specified. If the name specified contains a dot, then it is assumed to be a fullname, and any namespace also specified is ignored. For example, use "name": "org.foo.X" to indicate the fullname org.foo.X.
-* A name only is specified, i.e., a name that contains no dots. In this case the namespace is taken from the most tightly enclosing schema or protocol, and the fullname is constructed from that namespace and the name. For example, if "name": "X" is specified, and this occurs within a field of the record definition of org.foo.Y, then the fullname is org.foo.X. If there is no enclosing namespace then the null namespace is used.
+The fullname of a record, enum or fixed definition is determined by the required `name` and optional `namespace` attributes like this:
+* A fullname is specified. If the name specified contains a dot, then it is assumed to be a fullname, and _any namespace also specified is ignored_. For example, use `"name": "org.foo.X"` to indicate the fullname `org.foo.X`.
+* A simple name (a name that contains no dots) and namespace are both specified. For example, one might use `"name": "X", "namespace": "org.foo"` to indicate the fullname `org.foo.X`.
+* A simple name only is specified (a name that contains no dots). In this case the namespace is taken from the most tightly enclosing named schema or protocol, and the fullname is constructed from that namespace and the name. For example, if `"name": "X"` is specified, and this occurs within a field of the record definition of `org.foo.Y`, then the fullname is `org.foo.X`. This also happens if there is no enclosing namespace (i.e., the enclosing schema definition has the null namespace).
+
 
 References to previously defined names are as in the latter two cases above: if they contain a dot they are a fullname, if they do not contain a dot, the namespace is the namespace of the enclosing definition.
 
