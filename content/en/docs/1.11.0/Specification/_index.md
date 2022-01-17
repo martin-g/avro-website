@@ -220,7 +220,7 @@ Primitive types are encoded in binary as follows:
 | 2 | 04 |
 |...|...|
 |-64 | 7f |
-|64 | 80 |
+|64 | 80 01|
 |...|...|
 
 * a _float_ is written as 4 bytes. The float is converted into a 32-bit integer using a method equivalent to Java's [floatToIntBits](https://docs.oracle.com/javase/8/docs/api/java/lang/Float.html#floatToIntBits-float-) and then encoded in little-endian format.
