@@ -613,5 +613,19 @@ submission process. This should enable better productivity.&lt;/p&gt;
       </description>
     </item>
     
+    <item>
+      <title>Blog: Avro joins Apache</title>
+      <link>/blog/2009/04/10/avro-joins-apache/</link>
+      <pubDate>Fri, 10 Apr 2009 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2009/04/10/avro-joins-apache/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Avro has joined the Apache Software Foundataion as a Hadoop subproject.&lt;/p&gt;
+
+      </description>
+    </item>
+    
   </channel>
 </rss>
