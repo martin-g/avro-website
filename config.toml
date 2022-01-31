@@ -212,8 +212,12 @@ enable = true
 
 
 [[params.versions]]
+  version = "next"
+  url = "/docs/next/"
+
+[[params.versions]]
   version = "1.11.0"
-  url = "/docs/1.11.0/"
+  url = "https://svn.apache.org/repos/asf/avro/site/publish/docs/1.11.0/index.html"
 
 [[params.versions]]
   version = "1.10.2"
